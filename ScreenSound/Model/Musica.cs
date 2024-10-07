@@ -1,4 +1,6 @@
-﻿class Musica
+﻿namespace ScreenSound.Models;
+
+class Musica
 {
     public Musica(Banda artista, string nome)
     {

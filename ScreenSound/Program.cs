@@ -1,4 +1,6 @@
-﻿Dictionary<Banda, List<int>> bandasRegistradas = [];
+﻿using ScreenSound.Models;
+
+Dictionary<String, Banda> bandasRegistradas = [];
 //bandasRegistradas.Add("Linkin Park", new List<int> { 10, 8, 6 });
 //bandasRegistradas.Add("The Beatles", new List<int>());
 
@@ -72,10 +74,10 @@ void RegistrarBanda()
     Console.Write("Digite o nome da banda que deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-    if (!ExisteBanda(nomeDaBanda))
+    if (!bandasRegistradas.ContainsKey(nomeDaBanda))
     {
         Banda banda = new(nomeDaBanda);
-        bandasRegistradas.Add(banda, new List<int>());
+        bandasRegistradas.Add(nomeDaBanda, banda);
         Console.WriteLine($"A banda {nomeDaBanda} foi registrada com sucesso!");
     }
     else
@@ -93,13 +95,30 @@ void RegistrarAlbum()
     Console.Clear();
     ExibirTituloDaOpcao("Registro de álbuns");
     Console.Write("Digite a banda cujo álbum deseja registrar: ");
-    string nomeDaBanda = Console.ReadLine()!;
-    Console.Write("Agora digite o título do álbum: ");
-    string tituloAlbum = Console.ReadLine()!;
-    /**
-     * ESPAÇO RESERVADO PARA COMPLETAR A FUNÇÃO
-     */
-    Console.WriteLine($"O álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso!");
+    string nomeDaBanda = Console.ReadLine()!.ToUpper();
+
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
+    {
+        Console.Write("Agora digite o título do álbum: ");
+        string tituloAlbum = Console.ReadLine()!.ToUpper();
+        Album album = new(tituloAlbum);
+
+        foreach(var i in bandasRegistradas.Keys)
+        {
+            if (i.Equals(nomeDaBanda))
+            {
+                Banda banda = bandasRegistradas[i];
+                banda.AdicionarAlbum(album);
+            }
+        }
+
+        Console.WriteLine($"O álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso!");
+    }
+    else
+    {
+        Console.WriteLine($"A Banda {nomeDaBanda} não foi encontrada em nossos cadastros \nTente Novamente ... ");
+    }
+
     Thread.Sleep(4000);
     Console.Clear();
     ExibirOpcoesDoMenu();
@@ -110,9 +129,9 @@ void MostrarBandasRegistradas()
     Console.Clear();
     ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
 
-    foreach (Banda banda in bandasRegistradas.Keys)
+    foreach (var banda in bandasRegistradas.Keys)
     {
-        Console.WriteLine($"Banda: {banda.Nome}");
+        Console.WriteLine($"Banda: {banda}");
     }
 
     Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
@@ -177,16 +196,5 @@ void MostrarBandasRegistradas()
 //        ExibirOpcoesDoMenu();
 //    }
 //}
-
-
-bool ExisteBanda(string nomeDaBanda)
-{
-    bool exist = false;
-    foreach (Banda b in bandasRegistradas.Keys)
-    {
-        if (nomeDaBanda.Equals(b.Nome)) { exist = true; break; }
-    }
-    return exist;
-}
 
 ExibirOpcoesDoMenu();
