@@ -64,6 +64,7 @@ void ExibirOpcoesDoMenu()
     }
 }
 
+//Cria um título composto com * como borda
 void ExibirTituloDaOpcao(string titulo)
 {
     int quantidadeDeLetras = titulo.Length;
@@ -80,6 +81,7 @@ void RegistrarBanda()
     Console.Write("Digite o nome da banda que deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
+    //Verifica sa já existe a Banda cadastrada
     if (!bandasRegistradas.ContainsKey(nomeDaBanda))
     {
         Banda banda = new(nomeDaBanda);
@@ -102,9 +104,10 @@ void RegistrarAlbum()
 {
     Console.Clear();
     ExibirTituloDaOpcao("Registro de álbuns");
-    Console.Write("Digite a banda cujo álbum deseja registrar: ");
+    Console.Write("\nDigite a banda cujo álbum deseja registrar: ");
     string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
+    //Verifica sa já existe a Banda cadastrada
     if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
         Console.Write("\nAgora digite o título do álbum: ");
@@ -112,10 +115,21 @@ void RegistrarAlbum()
         Album album = new(tituloAlbum);
 
         Banda banda = bandasRegistradas[nomeDaBanda];
-        banda.AdicionarAlbum(album);
 
-        Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso! \nAguarde . . .");
-        Thread.Sleep(2000);
+        //Busca na lista de Albuns cadastrado na classe Banda se já existe registrado no nome do álbum
+        Album existeAlbum = bandasRegistradas[nomeDaBanda].Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
+        if (existeAlbum == null) 
+        {
+            banda.AdicionarAlbum(album);
+            Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso! \nAguarde . . .");
+            Thread.Sleep(2000);
+        }
+        else
+        {
+            Console.WriteLine($"\nO Álbum: {tituloAlbum} já encontra-se em nosso cadastro da banda {nomeDaBanda}\nTente novamente . . .");
+            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
+            Console.ReadKey();
+        }
     }
     else
     {
@@ -144,9 +158,9 @@ void RegistrarMusica()
         //Verifica se a Banda já possui algum Álbum cadastrado
         if (banda.Albuns.Count != 0)
         {
-            Console.WriteLine("\nInforme quais dos álbuns abaixo deseja adicionar uma música");
+            Console.WriteLine("\nInforme quais dos álbuns abaixo deseja adicionar uma música:");
 
-            // Repassa o nome de todos os Álbum da Banda selecionada
+            // Apresenta o nome de todos os Álbum da Banda selecionada
             int cont = 1;
             foreach (Album album in banda.Albuns)
             {
@@ -156,7 +170,7 @@ void RegistrarMusica()
             Console.Write("\n\nÁlbum: ");
             string tituloAlbum = Console.ReadLine()!.ToUpper();
 
-            Console.Write($"\nEntre com o nome da música para o álbum {tituloAlbum}");
+            Console.Write($"\nEntre com o nome da música para o álbum {tituloAlbum}: ");
             string tituloMusica = Console.ReadLine()!.ToUpper();
 
             Musica musica = new(banda, tituloMusica);
@@ -170,6 +184,9 @@ void RegistrarMusica()
 
                 }
             }
+
+            Console.WriteLine($"\nA música {tituloMusica} de {nomeDaBanda} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
+            Thread.Sleep(2000);
         }
         else
         {
