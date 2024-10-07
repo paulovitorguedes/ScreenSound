@@ -3,7 +3,7 @@
 class Banda
 {
     private List<Album> albuns = new List<Album>();
-    private List<int> notas = new List<int>();
+    private List<double> notas = new List<double>();
 
     public Banda(string nome)
     {
@@ -19,7 +19,7 @@ class Banda
         albuns.Add(album);
     }
 
-    public void AdicionarNota(int nota)
+    public void AdicionarNota(double nota)
     {
         notas.Add(nota);
     }
