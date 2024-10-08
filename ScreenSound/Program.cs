@@ -176,7 +176,33 @@ void RegistrarMusica()
                 Console.Write($"\nEntre com o nome da música para o álbum {tituloAlbum}: ");
                 string tituloMusica = Console.ReadLine()!.ToUpper();
 
-                Musica musica = new(banda, tituloMusica);
+                Console.Write($"\nEntre com a duração da música {tituloMusica} em segundos: ");
+                int duracaoMusica = int.Parse(Console.ReadLine()!);
+
+                Console.Write($"\nInforme se a música {tituloMusica} estára disponível no plano básico ( 1 - SIM / 2 - NÃO ): ");
+                string stringDisponivel = Console.ReadLine()!;
+
+                bool boolDisponivel = false;
+                switch (stringDisponivel)
+                {
+                    case "1":
+                        boolDisponivel = true;
+                        break;
+                    case "2":
+                        boolDisponivel = false;
+                        break;
+                    default:
+                        Console.WriteLine("\nOpção Inválida, tente novamente . . .");
+                        Thread.Sleep(2000);
+                        RegistrarMusica();
+                        break;
+                }
+
+                Musica musica = new(banda, tituloMusica)
+                {
+                    Duracao = duracaoMusica,
+                    Disponivel = boolDisponivel
+                };
 
                 //Adiciona o obj Musica ao álbum cadastrado na lista de álbuns da classe Banda
                 foreach (Album a in banda.Albuns)
@@ -257,11 +283,12 @@ void AvaliarUmaBanda()
     ExibirOpcoesDoMenu();
 }
 
+
 //void ExibirDetalhes()
 //{
 //    Console.Clear();
 //    ExibirTituloDaOpcao("Exibir detalhes da banda");
-//    Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
+//    Console.Write("\nDigite o nome da banda que deseja conhecer melhor: ");
 //    string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
 //    if (bandasRegistradas.ContainsKey(nomeDaBanda))
