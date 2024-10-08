@@ -3,8 +3,6 @@ using System.Linq;
 using System.Security;
 
 Dictionary<String, Banda> bandasRegistradas = [];
-//bandasRegistradas.Add("Linkin Park", new List<int> { 10, 8, 6 });
-//bandasRegistradas.Add("The Beatles", new List<int>());
 
 void ExibirLogo()
 {
@@ -19,6 +17,7 @@ void ExibirLogo()
 ");
     Console.WriteLine("Boas vindas ao Screen Sound 2.0!");
 }
+
 
 void ExibirOpcoesDoMenu()
 {
@@ -64,6 +63,7 @@ void ExibirOpcoesDoMenu()
     }
 }
 
+
 //Cria um título composto com * como borda
 void ExibirTituloDaOpcao(string titulo)
 {
@@ -87,18 +87,19 @@ void RegistrarBanda()
         Banda banda = new(nomeDaBanda);
         bandasRegistradas.Add(nomeDaBanda, banda);
         Console.WriteLine($"\nA banda {nomeDaBanda} foi registrada com sucesso!\nAguarde . . .");
-        Thread.Sleep(2000);
+        //Thread.Sleep(2000);
     }
     else
     {
         Console.WriteLine($"\nA Banda: {nomeDaBanda} já encontra-se em nosso cadastro de bandas\nTente novamente . . .");
-        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-        Console.ReadKey();
-    }
 
+    }
+    Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+    Console.ReadKey();
     Console.Clear();
     ExibirOpcoesDoMenu();
 }
+
 
 void RegistrarAlbum()
 {
@@ -118,26 +119,24 @@ void RegistrarAlbum()
 
         //Busca na lista de Albuns cadastrado na classe Banda se já existe registrado no nome do álbum
         Album existeAlbum = bandasRegistradas[nomeDaBanda].Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
-        if (existeAlbum == null) 
+        if (existeAlbum == null)
         {
             banda.AdicionarAlbum(album);
             Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso! \nAguarde . . .");
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
         }
         else
         {
             Console.WriteLine($"\nO Álbum: {tituloAlbum} já encontra-se em nosso cadastro da banda {nomeDaBanda}\nTente novamente . . .");
-            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
         }
     }
     else
     {
         Console.WriteLine($"\nA Banda {nomeDaBanda} não foi encontrada em nossos cadastros\nTente novamente . . .");
-        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-        Console.ReadKey();
     }
 
+    Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+    Console.ReadKey();
     Console.Clear();
     ExibirOpcoesDoMenu();
 }
@@ -186,26 +185,25 @@ void RegistrarMusica()
             }
 
             Console.WriteLine($"\nA música {tituloMusica} de {nomeDaBanda} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
-            Thread.Sleep(2000);
+            //Thread.Sleep(2000);
         }
         else
         {
             Console.WriteLine($"A Banda {nomeDaBanda} não possui Álbuns cadastrados\nTente primeiramente cadastrar um Álbum.");
-            Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
         }
 
     }
     else
     {
         Console.WriteLine($"A Banda {nomeDaBanda} não foi encontrada em nossos cadastros\nTente novamente . . .");
-        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-        Console.ReadKey();
     }
 
+    Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+    Console.ReadKey();
     Console.Clear();
     ExibirOpcoesDoMenu();
 }
+
 
 void MostrarBandasRegistradas()
 {
@@ -238,16 +236,16 @@ void AvaliarUmaBanda()
 
         bandasRegistradas[nomeDaBanda].AdicionarNota(nota);
         Console.WriteLine($"\nA nota {nota} foi registrada com sucesso para a banda {nomeDaBanda}");
-        Thread.Sleep(2000);
+        //Thread.Sleep(2000);
 
     }
     else
     {
         Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-        Console.ReadKey();
     }
 
+    Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+    Console.ReadKey();
     Console.Clear();
     ExibirOpcoesDoMenu();
 }
