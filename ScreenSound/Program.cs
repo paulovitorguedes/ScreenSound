@@ -161,31 +161,38 @@ void RegistrarMusica()
 
             // Apresenta o nome de todos os Álbum da Banda selecionada
             int cont = 1;
-            foreach (Album album in banda.Albuns)
+            foreach (Album a in banda.Albuns)
             {
-                Console.WriteLine($"Álbum{cont++}: {album.Nome}");
+                Console.WriteLine($"Álbum{cont++}: {a.Nome}");
             }
 
             Console.Write("\n\nÁlbum: ");
             string tituloAlbum = Console.ReadLine()!.ToUpper();
 
-            Console.Write($"\nEntre com o nome da música para o álbum {tituloAlbum}: ");
-            string tituloMusica = Console.ReadLine()!.ToUpper();
+            Album album = banda.Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
 
-            Musica musica = new(banda, tituloMusica);
-
-            //Adiciona o obj Musica ao álbum cadastrado na lista de álbuns da classe Banda
-            foreach (Album album in banda.Albuns)
+            if (album != null)
             {
-                if (album.Nome.Equals(tituloAlbum))
+                Console.Write($"\nEntre com o nome da música para o álbum {tituloAlbum}: ");
+                string tituloMusica = Console.ReadLine()!.ToUpper();
+
+                Musica musica = new(banda, tituloMusica);
+
+                //Adiciona o obj Musica ao álbum cadastrado na lista de álbuns da classe Banda
+                foreach (Album a in banda.Albuns)
                 {
-                    album.AdicionarMusica(musica);
+                    if (a.Nome.Equals(tituloAlbum)) a.AdicionarMusica(musica); break;
 
                 }
-            }
 
-            Console.WriteLine($"\nA música {tituloMusica} de {nomeDaBanda} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
-            //Thread.Sleep(2000);
+                Console.WriteLine($"\nA música {tituloMusica} de {nomeDaBanda} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
+                //Thread.Sleep(2000);
+
+            }
+            else
+            {
+                Console.WriteLine($"O Álbum {tituloAlbum} não foi encontrada em nossos cadastros\nTente novamente . . .");
+            }
         }
         else
         {

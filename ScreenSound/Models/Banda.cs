@@ -2,8 +2,8 @@
 
 class Banda
 {
-    private List<Album> albuns = new List<Album>();
-    private List<double> notas = new List<double>();
+    private List<Album> albuns = [];
+    private List<double> notas = [];
 
     public Banda(string nome)
     {
