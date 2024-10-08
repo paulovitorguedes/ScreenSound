@@ -13,6 +13,7 @@ class Banda
     public string Nome { get; }
     public double Media => notas.Average();
     public List<Album> Albuns => albuns;
+    public List<double> Notas => notas;
 
     public void AdicionarAlbum(Album album)
     {

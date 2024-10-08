@@ -52,7 +52,7 @@ void ExibirOpcoesDoMenu()
             AvaliarUmaBanda();
             break;
         case 6:
-            //ExibirDetalhes();
+            ExibirDetalhes();
             break;
         case -1:
             Console.WriteLine("Tchau tchau :)");
@@ -284,34 +284,43 @@ void AvaliarUmaBanda()
 }
 
 
-//void ExibirDetalhes()
-//{
-//    Console.Clear();
-//    ExibirTituloDaOpcao("Exibir detalhes da banda");
-//    Console.Write("\nDigite o nome da banda que deseja conhecer melhor: ");
-//    string nomeDaBanda = Console.ReadLine()!.ToUpper();
+void ExibirDetalhes()
+{
+    Console.Clear();
+    ExibirTituloDaOpcao("Exibir detalhes da banda");
+    Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
+    string nomeDaBanda = Console.ReadLine()!.ToUpper();
+    Banda banda = bandasRegistradas[nomeDaBanda];
 
-//    if (bandasRegistradas.ContainsKey(nomeDaBanda))
-//    {
-//        List<int> notasDaBanda = bandasRegistradas[nomeDaBanda];
-//        Console.WriteLine($"\nA média da banda {nomeDaBanda} é {notasDaBanda.Average()}.");
-//        /**
-//        * ESPAÇO RESERVADO PARA COMPLETAR A FUNÇÃO
-//        */
-//        Console.WriteLine("Digite uma tecla para votar ao menu principal");
-//        Console.ReadKey();
-//        Console.Clear();
-//        ExibirOpcoesDoMenu();
+    //Verifica se existe a Banda cadadtrada
+    if (bandasRegistradas.ContainsKey(nomeDaBanda))
+    {
+        // Apresenta o nome de todos os Álbum da Banda selecionada
+        Console.WriteLine($"\n\nA banda {nomeDaBanda} possui o(s) álbun(s) cadastrado(s): ");
+        int cont = 1;
+        foreach (Album a in banda.Albuns)
+        {
+            Console.WriteLine($"Álbum{cont++}: {a.Nome} com duração de {a.DuracaoTotal} Segundos.");
+        }
 
-//    }
-//    else
-//    {
-//        Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-//        Console.WriteLine("Digite uma tecla para voltar ao menu principal");
-//        Console.ReadKey();
-//        Console.Clear();
-//        ExibirOpcoesDoMenu();
-//    }
-//}
+        Console.WriteLine("Possui a(s) nota(s) cadastrada(s): ");
+        Console.WriteLine("Notas: ");
+        foreach (double nota in banda.Notas)
+        {
+            Console.Write(nota + " ");
+        }
+        Console.WriteLine($"Média: {banda.Media}");
+    }
+    else
+    {
+        Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
+    }
+
+    Console.WriteLine("\n\nDigite uma tecla para voltar ao menu principal ");
+    Console.ReadKey();
+    Console.Clear();
+    ExibirOpcoesDoMenu();
+}
+
 
 ExibirOpcoesDoMenu();
