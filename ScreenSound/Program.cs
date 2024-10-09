@@ -1,6 +1,4 @@
 ﻿using ScreenSound.Models;
-using System.Linq;
-using System.Security;
 
 Dictionary<String, Banda> bandasRegistradas = [];
 
@@ -265,10 +263,11 @@ void AvaliarUmaBanda()
     if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
         Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
-        double nota = double.Parse(Console.ReadLine()!);
+        //Avaliacao.Parce é um método static na class Avaliacao transformando a string em int e após criando o obj Avaliação
+        Avaliacao avaliacao = Avaliacao.Parse(Console.ReadLine()!);
 
-        bandasRegistradas[nomeDaBanda].AdicionarNota(nota);
-        Console.WriteLine($"\nA nota {nota} foi registrada com sucesso para a banda {nomeDaBanda}");
+        bandasRegistradas[nomeDaBanda].AdicionarNota(avaliacao);
+        Console.WriteLine($"\nA nota {avaliacao.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
         //Thread.Sleep(2000);
 
     }
@@ -292,22 +291,29 @@ void ExibirDetalhes()
     string nomeDaBanda = Console.ReadLine()!.ToUpper();
     Banda banda = bandasRegistradas[nomeDaBanda];
 
-    //Verifica se existe a Banda cadadtrada
+    //Verifica se existe a Banda cadastrada
     if (bandasRegistradas.ContainsKey(nomeDaBanda))
     {
         // Apresenta o nome de todos os Álbum da Banda selecionada
         Console.WriteLine($"\n\nA banda {nomeDaBanda} possui o(s) álbun(s) cadastrado(s): ");
         int cont = 1;
-        foreach (Album a in banda.Albuns)
+        if (banda.Albuns.Count > 0)
         {
-            Console.WriteLine($"Álbum{cont++}: {a.Nome} com duração de {a.DuracaoTotal} Segundos.");
+            foreach (Album a in banda.Albuns)
+            {
+                Console.WriteLine($"Álbum{cont++}: {a.Nome} com duração de {a.DuracaoTotal} Segundos.");
+            } 
+        }
+        else
+        {
+            Console.WriteLine("Não foi detectado albuns cadastrados");
         }
 
-        Console.WriteLine("Possui a(s) nota(s) cadastrada(s): ");
+        Console.WriteLine("\nPossui a(s) nota(s) cadastrada(s): ");
         Console.WriteLine("Notas: ");
-        foreach (double nota in banda.Notas)
+        foreach (Avaliacao avaliacao in banda.Notas)
         {
-            Console.Write(nota + " ");
+            Console.Write(avaliacao.Nota + " ");
         }
         Console.WriteLine($"Média: {banda.Media}");
     }
