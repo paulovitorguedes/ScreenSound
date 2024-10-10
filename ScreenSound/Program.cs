@@ -1,4 +1,5 @@
-﻿using ScreenSound.Models;
+﻿using ScreenSound.Menus;
+using ScreenSound.Models;
 
 
 
@@ -56,7 +57,9 @@ internal class Program
                     AvaliarUmaBanda();
                     break;
                 case 6:
-                    ExibirDetalhes();
+                    MenuExibirDetalhes menu = new MenuExibirDetalhes();
+                    menu.Executar(bandasRegistradas);
+                    ExibirOpcoesDoMenu();
                     break;
                 case -1:
                     Console.WriteLine("Tchau tchau :)");
@@ -272,9 +275,6 @@ internal class Program
                 //Avaliacao.Parce é um método static na class Avaliacao transformando a string em int e após criando o obj Avaliação
                 Avaliacao avaliacao = Avaliacao.Parse(Console.ReadLine()!);
 
-                if (avaliacao.Nota < 0) Console.WriteLine($"\nSua avaliação foi inferior a ( 0 ), será atribuido a nota ( 0 ).");
-                else if (avaliacao.Nota > 10) Console.WriteLine($"\nSua avaliação foi superior a ( 10 ), será atribuido a nota ( 10 ).");
-
                 bandasRegistradas[nomeDaBanda].AdicionarNota(avaliacao);
                 Console.WriteLine($"\nA nota {avaliacao.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
                 //Thread.Sleep(2000);
@@ -286,52 +286,6 @@ internal class Program
             }
 
             Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
-            Console.ReadKey();
-            Console.Clear();
-            ExibirOpcoesDoMenu();
-        }
-
-
-        void ExibirDetalhes()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Exibir detalhes da banda");
-            Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
-            Banda banda = bandasRegistradas[nomeDaBanda];
-
-            //Verifica se existe a Banda cadastrada
-            if (bandasRegistradas.ContainsKey(nomeDaBanda))
-            {
-                // Apresenta o nome de todos os Álbum da Banda selecionada
-                Console.WriteLine($"\n\nA banda {nomeDaBanda} possui o(s) álbun(s) cadastrado(s): ");
-                int cont = 1;
-                if (banda.Albuns.Count > 0)
-                {
-                    foreach (Album a in banda.Albuns)
-                    {
-                        Console.WriteLine($"Álbum{cont++}: {a.Nome} com duração de {a.DuracaoTotal} Segundos.");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Não foi detectado albuns cadastrados");
-                }
-
-                Console.WriteLine("\nPossui a(s) nota(s) cadastrada(s): ");
-                Console.WriteLine("Notas: ");
-                foreach (Avaliacao avaliacao in banda.Notas)
-                {
-                    Console.Write(avaliacao.Nota + " ");
-                }
-                Console.WriteLine($"Média: {banda.Media}");
-            }
-            else
-            {
-                Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-            }
-
-            Console.WriteLine("\n\nDigite uma tecla para voltar ao menu principal ");
             Console.ReadKey();
             Console.Clear();
             ExibirOpcoesDoMenu();
