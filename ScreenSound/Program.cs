@@ -42,7 +42,9 @@ internal class Program
             switch (opcaoEscolhidaNumerica)
             {
                 case 1:
-                    RegistrarBanda();
+                    MenuRegistrarBanda menu1 = new();
+                    menu1.Executar(bandasRegistradas);
+                    ExibirOpcoesDoMenu();
                     break;
                 case 2:
                     MenuRegistrarAlbum menu2 = new();
@@ -76,49 +78,6 @@ internal class Program
                     Console.WriteLine("Opção inválida");
                     break;
             }
-        }
-
-
-        //Cria um título composto com * como borda
-        void ExibirTituloDaOpcao(string titulo)
-        {
-            int quantidadeDeLetras = titulo.Length;
-            string asteriscos = string.Empty.PadLeft(quantidadeDeLetras, '*');
-            Console.WriteLine(asteriscos);
-            Console.WriteLine(titulo);
-            Console.WriteLine(asteriscos + "\n");
-        }
-
-        void RegistrarBanda()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Registro das bandas");
-            Console.Write("Digite o nome da banda que deseja registrar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
-
-            //Verifica sa já existe a Banda cadastrada
-            if (!bandasRegistradas.ContainsKey(nomeDaBanda))
-            {
-                Banda banda = new(nomeDaBanda);
-                bandasRegistradas.Add(nomeDaBanda, banda);
-                Console.WriteLine($"\nA banda {nomeDaBanda} foi registrada com sucesso!\nAguarde . . .");
-                //Thread.Sleep(2000);
-            }
-            else
-            {
-                Console.WriteLine($"\nA Banda: {nomeDaBanda} já encontra-se em nosso cadastro de bandas\nTente novamente . . .");
-
-            }
-            Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
-            Console.ReadKey();
-            Console.Clear();
-            ExibirOpcoesDoMenu();
-        }
-
-
-        void RegistrarAlbum()
-        {
-            
         }
 
         ExibirOpcoesDoMenu();
