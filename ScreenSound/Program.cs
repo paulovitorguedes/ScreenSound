@@ -1,13 +1,22 @@
 ﻿using ScreenSound.Menus;
 using ScreenSound.Models;
 
-
-
 internal class Program
 {
     private static void Main(string[] args)
     {
         Dictionary<string, Banda> bandasRegistradas = [];
+
+        Dictionary<int, Menus> opcoes = [];
+        opcoes.Add(1, new MenuRegistrarBanda());
+        opcoes.Add(2, new MenuRegistrarAlbum());
+        opcoes.Add(3, new MenuRegistrarMusica());
+        opcoes.Add(4, new MenuMostrarBandas());
+        opcoes.Add(5, new MenuAvaliarBanda());
+        opcoes.Add(6, new MenuExibirDetalhes());
+        opcoes.Add(-1, new MenuSair());
+
+        ExibirOpcoesDoMenu();
 
         void ExibirLogo()
         {
@@ -39,47 +48,19 @@ internal class Program
             string opcaoEscolhida = Console.ReadLine()!;
             int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
 
-            switch (opcaoEscolhidaNumerica)
+            if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
             {
-                case 1:
-                    MenuRegistrarBanda menu1 = new();
-                    menu1.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 2:
-                    MenuRegistrarAlbum menu2 = new();
-                    menu2.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 3:
-                    MenuRegistrarMusica menu3 = new();
-                    menu3.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 4:
-                    MenuMostrarBandas menu4 = new();
-                    menu4.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 5:
-                    MenuAvaliarBanda menu5 = new();
-                    menu5.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case 6:
-                    MenuExibirDetalhes menu6 = new();
-                    menu6.Executar(bandasRegistradas);
-                    ExibirOpcoesDoMenu();
-                    break;
-                case -1:
-                    Console.WriteLine("Tchau tchau :)");
-                    break;
-                default:
-                    Console.WriteLine("Opção inválida");
-                    break;
-            }
-        }
 
-        ExibirOpcoesDoMenu();
+                Menus MenuASerExibido = opcoes[opcaoEscolhidaNumerica];
+                MenuASerExibido.Executar(bandasRegistradas);
+                if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
+            }
+            else
+            {
+                Console.WriteLine("Opção Inválida . . .\nTente novamente");
+                ExibirOpcoesDoMenu();
+            }
+
+        }
     }
 }
