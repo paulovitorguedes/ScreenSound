@@ -51,7 +51,8 @@ internal class Program
                     RegistrarMusica();
                     break;
                 case 4:
-                    MostrarBandasRegistradas();
+                    MenuMostrarBandas menuMostrarBandas = new();
+                    menuMostrarBandas.Executar(bandasRegistradas);
                     break;
                 case 5:
                     MenuAvaliarBanda menuAvaliacao = new();
@@ -246,23 +247,6 @@ internal class Program
             ExibirOpcoesDoMenu();
         }
 
-
-        void MostrarBandasRegistradas()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
-
-            foreach (var banda in bandasRegistradas.Keys)
-            {
-                Console.WriteLine($"Banda: {banda}");
-            }
-
-            Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
-            Console.ReadKey();
-            Console.Clear();
-            ExibirOpcoesDoMenu();
-
-        }
         ExibirOpcoesDoMenu();
     }
 }
