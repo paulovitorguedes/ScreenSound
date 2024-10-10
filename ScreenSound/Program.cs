@@ -54,11 +54,13 @@ internal class Program
                     MostrarBandasRegistradas();
                     break;
                 case 5:
-                    AvaliarUmaBanda();
+                    MenuAvaliarBanda menuAvaliacao = new();
+                    menuAvaliacao.Executar(bandasRegistradas);
+                    ExibirOpcoesDoMenu();
                     break;
                 case 6:
-                    MenuExibirDetalhes menu = new MenuExibirDetalhes();
-                    menu.Executar(bandasRegistradas);
+                    MenuExibirDetalhes menuDetalhes = new();
+                    menuDetalhes.Executar(bandasRegistradas);
                     ExibirOpcoesDoMenu();
                     break;
                 case -1:
@@ -261,37 +263,6 @@ internal class Program
             ExibirOpcoesDoMenu();
 
         }
-
-        void AvaliarUmaBanda()
-        {
-            Console.Clear();
-            ExibirTituloDaOpcao("Avaliar banda");
-            Console.Write("Digite o nome da banda que deseja avaliar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
-
-            if (bandasRegistradas.ContainsKey(nomeDaBanda))
-            {
-                Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
-                //Avaliacao.Parce é um método static na class Avaliacao transformando a string em int e após criando o obj Avaliação
-                Avaliacao avaliacao = Avaliacao.Parse(Console.ReadLine()!);
-
-                bandasRegistradas[nomeDaBanda].AdicionarNota(avaliacao);
-                Console.WriteLine($"\nA nota {avaliacao.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
-                //Thread.Sleep(2000);
-
-            }
-            else
-            {
-                Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
-            }
-
-            Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
-            Console.ReadKey();
-            Console.Clear();
-            ExibirOpcoesDoMenu();
-        }
-
-
         ExibirOpcoesDoMenu();
     }
 }
