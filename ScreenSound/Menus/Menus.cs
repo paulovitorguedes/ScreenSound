@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ScreenSound.Models;
 
 namespace ScreenSound.Menus
 {
     internal class Menus
     {
+
+        internal virtual void Executar(Dictionary<string, Banda> bandasRegistradas)
+        {
+            Console.Clear();
+            Console.WriteLine("TESTE");
+        }
+
         //Cria um título composto com * como borda
         internal void ExibirTituloDaOpcao(string titulo)
         {

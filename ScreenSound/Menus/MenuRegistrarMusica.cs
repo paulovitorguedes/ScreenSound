@@ -1,17 +1,14 @@
 ﻿using ScreenSound.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ScreenSound.Menus
 {
-    internal class MenuRegistrarMusica : Menus
+    internal class MenuRegistrarMusica : Menus //Extend a classe Menus como herança
     {
-        internal void Executar(Dictionary<string, Banda> bandasRegistradas)
+        //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
+        internal override void Executar(Dictionary<string, Banda> bandasRegistradas)
         {
-            Console.Clear();
+            //base = Chama primeiramente o método da classe base (PAI) 
+            base.Executar(bandasRegistradas);
             ExibirTituloDaOpcao("Registro de músicas");
             Console.Write("Digite a banda cujo música deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
