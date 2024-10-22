@@ -1,2 +1,2 @@
 # ScreenSound
-Cadastrosd de Bandas, Albuns e Músicas
+Cadastros de Bandas, Albuns e Músicas
