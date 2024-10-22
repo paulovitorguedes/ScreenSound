@@ -46,9 +46,12 @@ internal class Program
 
             Console.Write("\nDigite a sua opção: ");
             string opcaoEscolhida = Console.ReadLine()!;
-            int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+            int opcaoEscolhidaNumerica;
 
-            if (opcoes.ContainsKey(opcaoEscolhidaNumerica))
+            //int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+            bool ehNumero = int.TryParse(opcaoEscolhida, out opcaoEscolhidaNumerica);
+
+            if (ehNumero && opcoes.ContainsKey(opcaoEscolhidaNumerica))
             {
 
                 Menus MenuASerExibido = opcoes[opcaoEscolhidaNumerica];
