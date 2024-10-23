@@ -23,8 +23,10 @@ internal class Banda : IAvaliavel
     }
 
     public List<Album> Albuns => albuns;
+    //public IEnumerable<Album> Albuns => albuns;
 
     public List<Avaliacao> Notas => notas;
+    //public IEnumerable<Avaliacao> Notas => notas;
 
     public void AdicionarAlbum(Album album)
     {
