@@ -1,7 +1,34 @@
 ﻿using ScreenSound.Menus;
 using ScreenSound.Models;
+using OpenAI_API;
+using System.Runtime.Intrinsics.X86;
 
-internal class Program
+// Para operar com o using OpenAI_API; será necessário instalar uma dependencia do OpenAi
+// Ao instanciar o OpenAIAPI entramos como parâmetro a key gerada pelo chatGpt
+var client = new OpenAIAPI("");
+
+var chat = client.Chat.CreateConversation();
+chat.AppendSystemMessage("Resuma a banda Metálica em 1 parágrafo. Adote um estilo informal.");
+
+//Nesse caso, o método GetResponse() é executado de forma assíncrona. Isso significa que a execução não parará no fim desse trecho de código que criamos, ela continuará executando o restante.
+//Precisamos informar para o #C que queremos esperar o término da execução dessa requisição. Para isso, antes de GetResponse() escrevemos await.
+string resposta = await chat.GetResponseFromChatbotAsync();
+string resposta2 = chat.GetResponseFromChatbotAsync().GetAwaiter().GetResult();
+Console.WriteLine(resposta2);
+
+//A palavra reservada await precisa estar em conjunto com a palavra async.
+
+//De forma geral, os métodos assíncronos retornam uma tarefa, porém, nesse caso, utilizaremos outra estrutura. Então apagamos o await.
+
+//Feito isso, se passarmos o mouse no método de GetResponseFromChatbotAsync(), percebemos que essa é uma tarefa que retorna uma string.
+
+//Então, na mesma linha, escrevemos .GetAwaiter(), para haver a espera e depois .GetResult() para termos o resultado.
+
+//Recomendamos essa opção somente se não for possível utilizar o awaite o async
+
+
+
+internal partial class Program
 {
     private static void Main(string[] args)
     {
