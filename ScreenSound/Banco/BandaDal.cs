@@ -70,6 +70,23 @@ internal class BandaDal
         int retorno = command.ExecuteNonQuery();
         Console.WriteLine($"Linhas afetadas: {retorno}");
     }
+
+
+
+    public void Deletar(Banda banda)
+    {
+        using var connection = new Connection().ObterConexao();
+        connection.Open();
+
+        string sql = "DELETE FROM Artistas WHERE Id = @id";
+        SqlCommand command = new SqlCommand(sql, connection);
+
+        command.Parameters.AddWithValue("@id", banda.Id);
+
+        int retorno = command.ExecuteNonQuery();
+        Console.WriteLine($"Linhas afetadas: {retorno}");
+    }
+
 }
 
 

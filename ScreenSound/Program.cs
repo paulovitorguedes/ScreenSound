@@ -1,9 +1,6 @@
-﻿using ScreenSound.Menus;
+﻿using ScreenSound.Banco;
+using ScreenSound.Menus;
 using ScreenSound.Models;
-using OpenAI_API;
-using System.Runtime.Intrinsics.X86;
-using ScreenSound.Banco;
-using static System.Formats.Asn1.AsnWriter;
 
 // Para operar com o using OpenAI_API; será necessário instalar uma dependencia do OpenAi
 // Ao instanciar o OpenAIAPI entramos como parâmetro a key gerada pelo chatGpt ex: new OpenAIAPI("chave gerada pelo site do chatGpt")
@@ -33,8 +30,10 @@ try
     
     var bandaDal = new BandaDal();
 
+    //Adiciona a Banda no banco
     //bandaDal.Adicionar(new Banda("FOO FIGHTERS", "descreva uma biagrafia de 1 linha sobre FOO FIGHTERS\r\nFoo Fighters é uma banda de rock americana, formada em 1994 por Dave Grohl, ex-baterista do Nirvana."));
 
+    //Apresenta as Bandas do Banco
     var listaBandas = bandaDal.Listar();
 
     foreach ( var bandas in listaBandas)
@@ -47,8 +46,13 @@ try
 
     }
 
-    bandaDal.Alterar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") {Id = 1 });
 
+    //altera a Banda de ID = 1 para a banda informada
+    //bandaDal.Alterar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") {Id = 1 });
+
+
+
+    bandaDal.Deletar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") { Id = 1 });
 
     listaBandas = bandaDal.Listar();
 
