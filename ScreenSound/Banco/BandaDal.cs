@@ -51,6 +51,25 @@ internal class BandaDal
         int retorno = command.ExecuteNonQuery();
         Console.WriteLine($"Linhas afetadas: {retorno}");
     }
+
+
+
+
+    public void Alterar(Banda banda)
+    {
+        using var connection = new Connection().ObterConexao();
+        connection.Open();
+
+        string sql = "UPDATE Artistas SET Nome = @nome, Bio = @bio WHERE Id = @id";
+        SqlCommand command = new SqlCommand(sql, connection);
+
+        command.Parameters.AddWithValue("@id", banda.Id);
+        command.Parameters.AddWithValue("@nome", banda.Nome);
+        command.Parameters.AddWithValue("@bio", banda.Bio);
+
+        int retorno = command.ExecuteNonQuery();
+        Console.WriteLine($"Linhas afetadas: {retorno}");
+    }
 }
 
 
