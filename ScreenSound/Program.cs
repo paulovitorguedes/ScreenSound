@@ -31,8 +31,11 @@ using static System.Formats.Asn1.AsnWriter;
 try
 {
     
-    var connection = new Connection();
-    var listaBandas = connection.Listar();
+    var bandaDal = new BandaDal();
+
+    bandaDal.Adicionar(new Banda("FOO FIGHTERS", "descreva uma biagrafia de 1 linha sobre FOO FIGHTERS\r\nFoo Fighters é uma banda de rock americana, formada em 1994 por Dave Grohl, ex-baterista do Nirvana."));
+
+    var listaBandas = bandaDal.Listar();
 
     foreach ( var bandas in listaBandas)
     {
@@ -43,6 +46,8 @@ try
         Console.WriteLine(bandas);
 
     }
+
+
 }
 catch (Exception ex)
 {
