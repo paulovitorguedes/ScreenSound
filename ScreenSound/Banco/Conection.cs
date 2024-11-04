@@ -1,11 +1,14 @@
 ﻿using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ScreenSound.Models;
 
 namespace ScreenSound.Banco;
+
+
+//Documentaação ADO.NET
+//https://learn.microsoft.com/pt-br/dotnet/framework/data/adonet/ado-net-overview
+//https://learn.microsoft.com/pt-br/dotnet/framework/data/adonet/ado-net-code-examples
+
+
 
 internal class Connection
 {
@@ -13,7 +16,7 @@ internal class Connection
 
     //Essa string foi recuperado do "Pesquisador de objetos do SQL Server", clicando com o botão direito no Bando "Screen Sound" em propriedades e na linha Cadeia de Conexão.
 
-    public SqlConnection ObterConexao()
+    public SqlConnection ObterConexao() //SQLConnection - representa a conexão com o banco de dados;
     {
         return new SqlConnection(connectionString);
     }

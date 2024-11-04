@@ -30,10 +30,19 @@ using static System.Formats.Asn1.AsnWriter;
 
 try
 {
-    //A instrução using tem como objetivo principal garantir que objetos descartáveis sejam utilizados corretamente.Quando declaramos uma variável local como using, ela é descartada no final do escopo em que ela foi declarada, portanto, será descartada ao finalizar a execução do try. Com isso conseguimos aplicar uma boa prática e gerenciar melhor os recursos que estão sendo utilizados e mantê-los somente quando estiverem sendo utilizados.
-    using var connection = new Connection().ObterConexao();
-    connection.Open();
-    Console.WriteLine(connection.State);
+    
+    var connection = new Connection();
+    var listaBandas = connection.Listar();
+
+    foreach ( var bandas in listaBandas)
+    {
+        //Console.WriteLine(bandas.Id);
+        //Console.WriteLine(bandas.Nome);
+        //Console.WriteLine(bandas.Bio);
+        //Console.WriteLine(bandas.FotoPerfil);
+        Console.WriteLine(bandas);
+
+    }
 }
 catch (Exception ex)
 {

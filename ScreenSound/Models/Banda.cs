@@ -5,9 +5,11 @@ internal class Banda : IAvaliavel
     private List<Album> albuns = [];
     private List<Avaliacao> notas = [];
 
-    public Banda(string nome)
+    public Banda(string nome, string bio = "")
     {
         Nome = nome;
+        Bio = bio;
+        FotoPerfil = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
     }
 
     public string Nome { get; }
@@ -21,6 +23,10 @@ internal class Banda : IAvaliavel
             else return notas.Average(a => a.Nota);
         }
     }
+
+    public int Id { get; set; }
+    public string Bio { get; set; }
+    public string FotoPerfil { get; set; }
 
     public List<Album> Albuns => albuns;
     //public IEnumerable<Album> Albuns => albuns;
@@ -45,5 +51,14 @@ internal class Banda : IAvaliavel
         {
             Console.WriteLine($"Álbum: {album.Nome} ({album.DuracaoTotal})");
         }
+    }
+
+
+    public override string ToString()
+    {
+        return $@"Id: {Id}
+            Nome: {Nome}
+            Foto de Perfil: {FotoPerfil}
+            Bio: {Bio}";
     }
 }
