@@ -2,6 +2,11 @@
 
 internal class Avaliacao
 {
+    // Construtor padrão
+    public Avaliacao()
+    {
+    }
+
     public Avaliacao(int nota)
     {
         if (nota > 10) Nota = 10;
@@ -9,6 +14,7 @@ internal class Avaliacao
         else Nota = nota;
     }
 
+    public int Id { get; set; }
     public int Nota { get; }
 
 

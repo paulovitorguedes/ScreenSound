@@ -2,12 +2,17 @@
 
 internal class Musica
 {
+    public Musica()
+    {
+        
+    }
     public Musica(Banda artista, string nome)
     {
         Artista = artista;
         Nome = nome;
     }
 
+    public int Id { get; set; }
     public string Nome { get; }
     public Banda Artista { get; }
     public int Duracao { get; set; }

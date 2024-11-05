@@ -27,8 +27,9 @@ using ScreenSound.Models;
 
 try
 {
-    
-    var bandaDal = new BandaDal();
+
+    var contex = new ScreenSoundContext();
+    var bandaDal = new BandaDal(contex);
 
     //Adiciona a Banda no banco
     //bandaDal.Adicionar(new Banda("FOO FIGHTERS", "descreva uma biagrafia de 1 linha sobre FOO FIGHTERS\r\nFoo Fighters é uma banda de rock americana, formada em 1994 por Dave Grohl, ex-baterista do Nirvana."));
@@ -36,7 +37,7 @@ try
     //Apresenta as Bandas do Banco
     var listaBandas = bandaDal.Listar();
 
-    foreach ( var bandas in listaBandas)
+    foreach (var bandas in listaBandas)
     {
         //Console.WriteLine(bandas.Id);
         //Console.WriteLine(bandas.Nome);
@@ -51,24 +52,8 @@ try
     //bandaDal.Alterar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") {Id = 1 });
 
 
-
-    bandaDal.Deletar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") { Id = 1 });
-
-    listaBandas = bandaDal.Listar();
-
-    foreach (var bandas in listaBandas)
-    {
-        //Console.WriteLine(bandas.Id);
-        //Console.WriteLine(bandas.Nome);
-        //Console.WriteLine(bandas.Bio);
-        //Console.WriteLine(bandas.FotoPerfil);
-        Console.WriteLine(bandas);
-
-    }
-
-
-
-
+    //Deletar a Banda de ID = 1
+    //bandaDal.Deletar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") { Id = 1 });
 
 
 }

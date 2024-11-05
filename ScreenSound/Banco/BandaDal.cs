@@ -7,49 +7,89 @@ namespace ScreenSound.Banco;
 
 internal class BandaDal
 {
+
+    private readonly ScreenSoundContext _context;
+
+    public BandaDal(ScreenSoundContext context)
+    {
+        _context = context;
+    }
+
+
     public IEnumerable<Banda> Listar()
     {
-        var lista = new List<Banda>();
+
+
+
+        //Utilizando a classe ScreenSoundContext com o Entuty Framework
 
         //A instrução using tem como objetivo principal garantir que objetos descartáveis sejam utilizados corretamente.Quando declaramos uma variável local como using, ela é descartada no final do escopo em que ela foi declarada, portanto, será descartada ao finalizar a execução do try. Com isso conseguimos aplicar uma boa prática e gerenciar melhor os recursos que estão sendo utilizados e mantê-los somente quando estiverem sendo utilizados.
-        using var connection = new Connection().ObterConexao();
-        connection.Open();
+        //using var context = new ScreenSoundContext();
+        return _context.Artistas.ToList();
 
-        string sql = "SELECT * FROM Artistas";
 
-        SqlCommand command = new SqlCommand(sql, connection); //SQLComand - representa a instrução SQL que será executada no banco de dados;
 
-        using SqlDataReader dataReader = command.ExecuteReader(); //SQLDataReader - fornece um modo de ler as linhas do banco de dados.
 
-        while (dataReader.Read())
-        {
-            string nomeBanda = Convert.ToString(dataReader["Nome"]);
-            string bioBanda = Convert.ToString(dataReader["Bio"]);
-            int idBanda = Convert.ToInt32(dataReader["Id"]);
 
-            Banda banda = new(nomeBanda, bioBanda) { Id = idBanda };
 
-            lista.Add(banda);
-        }
-        return lista;
+        //Utilizando a classe Conection e inserindo as querys manualmente
+
+
+        //var lista = new List<Banda>();
+
+        ////A instrução using tem como objetivo principal garantir que objetos descartáveis sejam utilizados corretamente.Quando declaramos uma variável local como using, ela é descartada no final do escopo em que ela foi declarada, portanto, será descartada ao finalizar a execução do try. Com isso conseguimos aplicar uma boa prática e gerenciar melhor os recursos que estão sendo utilizados e mantê-los somente quando estiverem sendo utilizados.
+        //using var connection = new Connection().ObterConexao();
+        //connection.Open();
+
+        //string sql = "SELECT * FROM Artistas";
+
+        //SqlCommand command = new SqlCommand(sql, connection); //SQLComand - representa a instrução SQL que será executada no banco de dados;
+
+        //using SqlDataReader dataReader = command.ExecuteReader(); //SQLDataReader - fornece um modo de ler as linhas do banco de dados.
+
+        //while (dataReader.Read())
+        //{
+        //    string nomeBanda = Convert.ToString(dataReader["Nome"]);
+        //    string bioBanda = Convert.ToString(dataReader["Bio"]);
+        //    int idBanda = Convert.ToInt32(dataReader["Id"]);
+
+        //    Banda banda = new(nomeBanda, bioBanda) { Id = idBanda };
+
+        //    lista.Add(banda);
+        //}
+        //return lista;
     }
 
 
 
     public void Adicionar(Banda banda)
     {
-        using var connection = new Connection().ObterConexao();
-        connection.Open();
 
-        string sql = "INSERT INTO Artistas (Nome, FotoPerfil, Bio) VALUES (@nome, @perfilPadrao, @bio)";
-        SqlCommand command = new SqlCommand(sql, connection);
 
-        command.Parameters.AddWithValue("@nome", banda.Nome);
-        command.Parameters.AddWithValue("@perfilPadrao", banda.FotoPerfil);
-        command.Parameters.AddWithValue("@bio", banda.Bio);
+        //Utilizando a classe ScreenSoundContext com o Entuty Framework
 
-        int retorno = command.ExecuteNonQuery();
-        Console.WriteLine($"Linhas afetadas: {retorno}");
+
+        //using var context = new ScreenSoundContext();
+        _context.Artistas.Add(banda);
+        _context.SaveChanges();
+
+
+
+
+        //Utilizando a classe Conection e inserindo as querys manualmente
+
+        //using var connection = new Connection().ObterConexao();
+        //connection.Open();
+
+        //string sql = "INSERT INTO Artistas (Nome, FotoPerfil, Bio) VALUES (@nome, @perfilPadrao, @bio)";
+        //SqlCommand command = new SqlCommand(sql, connection);
+
+        //command.Parameters.AddWithValue("@nome", banda.Nome);
+        //command.Parameters.AddWithValue("@perfilPadrao", banda.FotoPerfil);
+        //command.Parameters.AddWithValue("@bio", banda.Bio);
+
+        //int retorno = command.ExecuteNonQuery();
+        //Console.WriteLine($"Linhas afetadas: {retorno}");
     }
 
 
@@ -57,34 +97,64 @@ internal class BandaDal
 
     public void Alterar(Banda banda)
     {
-        using var connection = new Connection().ObterConexao();
-        connection.Open();
 
-        string sql = "UPDATE Artistas SET Nome = @nome, Bio = @bio WHERE Id = @id";
-        SqlCommand command = new SqlCommand(sql, connection);
+        //Utilizando a classe ScreenSoundContext com o Entuty Framework
 
-        command.Parameters.AddWithValue("@id", banda.Id);
-        command.Parameters.AddWithValue("@nome", banda.Nome);
-        command.Parameters.AddWithValue("@bio", banda.Bio);
 
-        int retorno = command.ExecuteNonQuery();
-        Console.WriteLine($"Linhas afetadas: {retorno}");
+        //using var context = new ScreenSoundContext();
+        _context.Artistas.Update(banda);
+        _context.SaveChanges();
+
+
+
+
+        //Utilizando a classe Conection e inserindo as querys manualmente
+
+
+        //using var connection = new Connection().ObterConexao();
+        //connection.Open();
+
+        //string sql = "UPDATE Artistas SET Nome = @nome, Bio = @bio WHERE Id = @id";
+        //SqlCommand command = new SqlCommand(sql, connection);
+
+        //command.Parameters.AddWithValue("@id", banda.Id);
+        //command.Parameters.AddWithValue("@nome", banda.Nome);
+        //command.Parameters.AddWithValue("@bio", banda.Bio);
+
+        //int retorno = command.ExecuteNonQuery();
+        //Console.WriteLine($"Linhas afetadas: {retorno}");
     }
 
 
 
     public void Deletar(Banda banda)
     {
-        using var connection = new Connection().ObterConexao();
-        connection.Open();
 
-        string sql = "DELETE FROM Artistas WHERE Id = @id";
-        SqlCommand command = new SqlCommand(sql, connection);
 
-        command.Parameters.AddWithValue("@id", banda.Id);
+        //Utilizando a classe ScreenSoundContext com o Entuty Framework
 
-        int retorno = command.ExecuteNonQuery();
-        Console.WriteLine($"Linhas afetadas: {retorno}");
+
+        //using var context = new ScreenSoundContext();
+        _context.Artistas.Remove(banda);
+        _context.SaveChanges();
+
+
+
+
+
+        //Utilizando a classe Conection e inserindo as querys manualmente
+
+
+        //using var connection = new Connection().ObterConexao();
+        //connection.Open();
+
+        //string sql = "DELETE FROM Artistas WHERE Id = @id";
+        //SqlCommand command = new SqlCommand(sql, connection);
+
+        //command.Parameters.AddWithValue("@id", banda.Id);
+
+        //int retorno = command.ExecuteNonQuery();
+        //Console.WriteLine($"Linhas afetadas: {retorno}");
     }
 
 }

@@ -5,11 +5,18 @@ internal class Album : IAvaliavel
     private List<Musica> musicas = new List<Musica>();
     private List<Avaliacao> notas = new();
 
+
+    // Construtor padrão
+    public Album()
+    {
+    }
+
     public Album(string nome)
     {
         Nome = nome;
     }
 
+    public int Id { get; set; }
     public string Nome { get; }
     public int DuracaoTotal => musicas.Sum(m => m.Duracao);
     public List<Musica> Musicas => musicas;
