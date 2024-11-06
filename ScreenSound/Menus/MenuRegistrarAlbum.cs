@@ -1,20 +1,22 @@
-﻿using ScreenSound.Models;
+﻿using ScreenSound.Banco;
+using ScreenSound.Models;
 
 namespace ScreenSound.Menus
 {
     internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dictionary<string, Banda> bandasRegistradas)
+        internal override void Executar(BandaDal bandaDal)
         {
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandasRegistradas);
+            base.Executar(bandaDal);
             ExibirTituloDaOpcao("Registro de álbuns");
             Console.Write("\nDigite a banda cujo álbum deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            //Verifica sa já existe a Banda cadastrada
-            if (bandasRegistradas.ContainsKey(nomeDaBanda))
+            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
+            //Verifica se existe a Banda cadadtrada
+            if (banda != null)
             {
                 Console.Write("\nAgora digite o título do álbum: ");
 
@@ -36,10 +38,10 @@ namespace ScreenSound.Menus
                 
                 Album album = new(tituloAlbum);
 
-                Banda banda = bandasRegistradas[nomeDaBanda];
+                //Banda banda = bandasRegistradas[nomeDaBanda];
 
                 //Busca na lista de Albuns cadastrado na classe Banda se já existe registrado no nome do álbum
-                Album existeAlbum = bandasRegistradas[nomeDaBanda].Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
+                Album existeAlbum = banda.Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
                 if (existeAlbum == null)
                 {
                     banda.AdicionarAlbum(album);

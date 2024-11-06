@@ -29,9 +29,9 @@ internal class Banda : IAvaliavel
         }
     }
 
-    public int Id { get; private set; }
+    public int Id { get; set; }
     public string Nome { get; set; }
-    public string Bio { get; private set; }
+    public string Bio { get; set; }
     public string FotoPerfil { get; set; }
 
     public List<Album> Albuns => albuns;

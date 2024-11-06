@@ -1,23 +1,24 @@
-﻿using ScreenSound.Models;
+﻿using ScreenSound.Banco;
+using ScreenSound.Models;
 
 namespace ScreenSound.Menus
 {
     internal class MenuAvaliarAlbum : Menus
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dictionary<string, Banda> bandasRegistradas)
+        internal override void Executar(BandaDal bandaDal)
         {
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandasRegistradas);
+            base.Executar(bandaDal);
             ExibirTituloDaOpcao("Avaliar Albuns");
 
             Console.Write("Digite o nome da banda que possui o álbum desejado: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
+            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
             //Verifica se existe a Banda cadadtrada
-            if (bandasRegistradas.ContainsKey(nomeDaBanda))
-            {
-                Banda banda = bandasRegistradas[nomeDaBanda];
+            if (banda == null)
+            { 
 
                 //Verifica se a Banda já possui algum Álbum cadastrado
                 if (banda.Albuns.Count != 0)

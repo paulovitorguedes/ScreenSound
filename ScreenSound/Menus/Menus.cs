@@ -1,11 +1,12 @@
-﻿using ScreenSound.Models;
+﻿using ScreenSound.Banco;
+using ScreenSound.Models;
 
 namespace ScreenSound.Menus
 {
     internal class Menus
     {
 
-        internal virtual void Executar(Dictionary<string, Banda> bandasRegistradas)
+        internal virtual void Executar(BandaDal bandaDal)
         {
             Console.Clear();
             Console.WriteLine("TESTE");

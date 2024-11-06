@@ -2,6 +2,7 @@
 using ScreenSound.Models;
 using static System.Net.Mime.MediaTypeNames;
 using System.Runtime.ConstrainedExecution;
+using Microsoft.EntityFrameworkCore;
 
 namespace ScreenSound.Banco;
 
@@ -157,7 +158,23 @@ internal class BandaDal
         //Console.WriteLine($"Linhas afetadas: {retorno}");
     }
 
+
+
+
+
+
+
+    public Banda ListarBandaPorNome(string nome)
+    {
+
+        // return _context.Artistas.Where(n => n.Nome.Equals(nome)); //Neste caso se houver mais de um cadastro da mesma Banda, retorta  IEnumerable<Banda>
+        return _context.Artistas.FirstOrDefault(n => n.Nome.Equals(nome))!;
+    }
+
 }
+
+
+
 
 
 

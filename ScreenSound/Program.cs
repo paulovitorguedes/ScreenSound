@@ -25,44 +25,51 @@ using ScreenSound.Models;
 
 
 
-try
-{
-
-    var contex = new ScreenSoundContext();
-    var bandaDal = new BandaDal(contex);
-
-    //Adiciona a Banda no banco
-    //bandaDal.Adicionar(new Banda("FOO FIGHTERS", "descreva uma biagrafia de 1 linha sobre FOO FIGHTERS\r\nFoo Fighters é uma banda de rock americana, formada em 1994 por Dave Grohl, ex-baterista do Nirvana."));
-
-    //Apresenta as Bandas do Banco
-    var listaBandas = bandaDal.Listar();
-
-    foreach (var bandas in listaBandas)
-    {
-        //Console.WriteLine(bandas.Id);
-        //Console.WriteLine(bandas.Nome);
-        //Console.WriteLine(bandas.Bio);
-        //Console.WriteLine(bandas.FotoPerfil);
-        Console.WriteLine(bandas);
-
-    }
 
 
-    //altera a Banda de ID = 1 para a banda informada
-    //bandaDal.Alterar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") {Id = 1 });
+//____________________________TESTES COM BANDADAL
+
+//try
+//{
+
+//    var contex = new ScreenSoundContext();
+//    var bandaDal = new BandaDal(contex);
+
+//    //Adiciona a Banda no banco
+//    //bandaDal.Adicionar(new Banda("Gilberto Gil", "Gilberto Gil é um cantor, compositor e instrumentista brasileiro, nascido em 26 de junho de 1942 em Salvador, Bahia, e um dos criadores do Movimento Tropicalista.."));
 
 
-    //Deletar a Banda de ID = 1
-    //bandaDal.Deletar(new Banda("DJAVAN E AMIGOS", "Djavan é um renomado cantor, compositor e violonista brasileiro, nascido em 27 de janeiro de 1949 em Maceió, Alagoas") { Id = 1 });
 
 
-}
-catch (Exception ex)
-{
-    Console.WriteLine(ex.Message);
-}
+//    //altera a Banda de ID = 1 para a banda informada
+//    //bandaDal.Alterar(new Banda("FOO FIGHTERS", "Foo Fighters é uma banda de rock americana, formada em 1994 por Dave Grohl, ex-baterista do Nirvana") {Id = 2 });
 
-return;
+
+
+//    //Deletar a Banda de ID = 1002
+//    //bandaDal.Deletar(new Banda() { Id = 1002 });
+
+
+
+//    //Apresenta as Bandas do Banco
+//    var listaBandas = bandaDal.Listar();
+
+//    foreach (var bandas in listaBandas)
+//    {
+//        //Console.WriteLine(bandas.Id);
+//        //Console.WriteLine(bandas.Nome);
+//        //Console.WriteLine(bandas.Bio);
+//        //Console.WriteLine(bandas.FotoPerfil);
+//        Console.WriteLine(bandas);
+
+//    }
+//}
+//catch (Exception ex)
+//{
+//    Console.WriteLine(ex.Message);
+//}
+
+//return;
 
 
 
@@ -72,6 +79,9 @@ internal partial class Program
 {
     private static void Main(string[] args)
     {
+
+        var contex = new ScreenSoundContext();
+        var bandaDal = new BandaDal(contex);
         Dictionary<string, Banda> bandasRegistradas = [];
 
         Dictionary<int, Menus> opcoes = [];
@@ -124,7 +134,7 @@ internal partial class Program
             {
 
                 Menus MenuASerExibido = opcoes[opcaoEscolhidaNumerica];
-                MenuASerExibido.Executar(bandasRegistradas);
+                MenuASerExibido.Executar(bandaDal);
                 if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
             }
             else
