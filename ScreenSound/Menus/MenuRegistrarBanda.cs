@@ -58,7 +58,26 @@ namespace ScreenSound.Menus
 
         private void ExcluirBanda(BandaDal bandaDal)
         {
-            throw new NotImplementedException();
+            Console.Write("Digite o nome da banda que deseja Excluir: ");
+            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+
+            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
+            if (banda != null)
+            {
+                try
+                {
+                    bandaDal.Deletar(banda);
+                    Console.WriteLine($"\nA banda {nomeDaBanda} foi removida com sucesso!\nAguarde . . .");
+                    SairBanda();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Falha apresentada: {ex.Message}");
+                    Console.Write("\n\nDigite ENTER para continuar ");
+                    Console.ReadKey();
+                    Executar(bandaDal);
+                }
+            }
         }
 
 
