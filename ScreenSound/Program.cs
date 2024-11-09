@@ -32,8 +32,8 @@ using ScreenSound.Models;
 //try
 //{
 
-//    var contex = new ScreenSoundContext();
-//    var bandaDal = new BandaDal(contex);
+//var contex = new ScreenSoundContext();
+//var bandaDal = new BandaDal(contex);
 
 //    //Adiciona a Banda no banco
 //    //bandaDal.Adicionar(new Banda("Gilberto Gil", "Gilberto Gil é um cantor, compositor e instrumentista brasileiro, nascido em 26 de junho de 1942 em Salvador, Bahia, e um dos criadores do Movimento Tropicalista.."));
@@ -42,7 +42,7 @@ using ScreenSound.Models;
 
 
 //    //altera a Banda de ID = 1 para a banda informada
-//    //bandaDal.Alterar(new Banda("FOO FIGHTERS", "Foo Fighters é uma banda de rock americana, formada em 1994 por Dave Grohl, ex-baterista do Nirvana") {Id = 2 });
+//    //bandaDal.Alterar(new Banda("TESTE SOUND", "TEST TESTE SOUND") { Id = 3002 });
 
 
 
@@ -88,11 +88,13 @@ internal partial class Program
         opcoes.Add(1, new MenuRegistrarBanda());
         opcoes.Add(2, new MenuRegistrarAlbum());
         opcoes.Add(3, new MenuRegistrarMusica());
-        opcoes.Add(4, new MenuMostrarBandas());
-        opcoes.Add(5, new MenuAvaliarBanda());
-        opcoes.Add(6, new MenuExibirDetalhes());
-        opcoes.Add(7, new MenuAvaliarAlbum());
-        opcoes.Add(-1, new MenuSair());
+        opcoes.Add(4, new MenuAvaliarBanda());
+        opcoes.Add(5, new MenuAvaliarAlbum());
+        opcoes.Add(6, new MenuAvaliarMusica());
+        opcoes.Add(7, new MenuMostrarBandas());
+        opcoes.Add(8, new MenuExibirDetalhesAlbum());
+        opcoes.Add(9, new MenuExibirDetalhesBanda());
+        opcoes.Add(0, new MenuSair());
 
         ExibirOpcoesDoMenu();
 
@@ -114,32 +116,37 @@ internal partial class Program
         void ExibirOpcoesDoMenu()
         {
             ExibirLogo();
-            Console.WriteLine("\nDigite 1 para registrar uma banda");
+            Console.WriteLine("\nDigite 1 para Cadastrar uma banda");
             Console.WriteLine("Digite 2 para registrar o álbum de uma banda");
             Console.WriteLine("Digite 3 para registrar uma música de um album");
-            Console.WriteLine("Digite 4 para mostrar todas as bandas");
-            Console.WriteLine("Digite 5 para avaliar uma banda");
-            Console.WriteLine("Digite 6 para exibir os detalhes de uma banda");
-            Console.WriteLine("Digite 7 para avaliar um álbum");
-            Console.WriteLine("Digite -1 para sair");
+            Console.WriteLine("Digite 4 para avaliar uma banda");
+            Console.WriteLine("Digite 5 para avaliar um álbum");
+            Console.WriteLine("Digite 6 para avaliar uma música");
+            Console.WriteLine("Digite 7 para mostrar todas as bandas");
+            Console.WriteLine("Digite 8 para exibir os detalhes de um Album");
+            Console.WriteLine("Digite 9 para exibir os detalhes de uma banda");
+            Console.WriteLine("Digite 0 para sair");
 
             Console.Write("\nDigite a sua opção: ");
             string opcaoEscolhida = Console.ReadLine()!;
-            int opcaoEscolhidaNumerica;
 
-            //int opcaoEscolhidaNumerica = int.Parse(opcaoEscolhida);
+            int opcaoEscolhidaNumerica;
+            //TryParse retornará um bool se a converção do string opcaoEscolhida para o int opcaoEscolhidaNumerica for sucedida
             bool ehNumero = int.TryParse(opcaoEscolhida, out opcaoEscolhidaNumerica);
 
+            //se a converção for sucedida e se a opcaoEscolhidaNumerica conter no menu
             if (ehNumero && opcoes.ContainsKey(opcaoEscolhidaNumerica))
             {
-
                 Menus MenuASerExibido = opcoes[opcaoEscolhidaNumerica];
                 MenuASerExibido.Executar(bandaDal);
                 if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
             }
             else
             {
-                Console.WriteLine("Opção Inválida . . .\nTente novamente");
+                Console.WriteLine("Opção Inválida! Tente novamente");
+                Console.WriteLine("Digite ENTER para continuar . . .");
+                Console.ReadLine();
+                Console.Clear();
                 ExibirOpcoesDoMenu();
             }
 

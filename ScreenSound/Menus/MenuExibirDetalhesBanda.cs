@@ -3,7 +3,7 @@ using ScreenSound.Models;
 
 namespace ScreenSound.Menus
 {
-    internal class MenuExibirDetalhes : Menus //Extend a classe Menus como herança
+    internal class MenuExibirDetalhesBanda : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
         internal override void Executar(BandaDal bandaDal)
