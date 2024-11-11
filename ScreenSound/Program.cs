@@ -2,6 +2,12 @@
 using ScreenSound.Menus;
 using ScreenSound.Models;
 
+//A instrução using tem como objetivo principal garantir que objetos descartáveis sejam utilizados corretamente.Quando declaramos uma variável local como using, ela é descartada no final do escopo em que ela foi declarada, portanto, será descartada ao finalizar a execução do try. Com isso conseguimos aplicar uma boa prática e gerenciar melhor os recursos que estão sendo utilizados e mantê-los somente quando estiverem sendo utilizados.
+
+
+
+//______________________Descrição para utilizaçõ do OpenAI_API (Inteligencia artificial)
+
 // Para operar com o using OpenAI_API; será necessário instalar uma dependencia do OpenAi
 // Ao instanciar o OpenAIAPI entramos como parâmetro a key gerada pelo chatGpt ex: new OpenAIAPI("chave gerada pelo site do chatGpt")
 
@@ -81,8 +87,8 @@ internal partial class Program
     {
 
         var contex = new ScreenSoundContext();
-        var bandaDal = new BandaDal(contex);
-        Dictionary<string, Banda> bandasRegistradas = [];
+        var dal = new Dal<Banda>(contex);
+        //Dictionary<string, Banda> bandasRegistradas = [];
 
         Dictionary<int, Menus> opcoes = [];
         opcoes.Add(1, new MenuRegistrarBanda());
@@ -138,7 +144,7 @@ internal partial class Program
             if (ehNumero && opcoes.ContainsKey(opcaoEscolhidaNumerica))
             {
                 Menus MenuASerExibido = opcoes[opcaoEscolhidaNumerica];
-                MenuASerExibido.Executar(bandaDal);
+                MenuASerExibido.Executar(dal);
                 if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
             }
             else

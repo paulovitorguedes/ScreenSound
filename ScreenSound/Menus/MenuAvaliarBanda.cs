@@ -6,7 +6,7 @@ namespace ScreenSound.Menus
     internal class MenuAvaliarBanda : Menus  //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(BandaDal bandaDal)
+        internal override void Executar(Dal<Banda> bandaDal)
         {
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar(bandaDal);
@@ -14,7 +14,7 @@ namespace ScreenSound.Menus
             Console.Write("Digite o nome da banda que deseja avaliar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
+            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
             if (banda == null)
             {
                 Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");

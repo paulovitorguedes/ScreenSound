@@ -6,10 +6,9 @@ namespace ScreenSound.Menus
     internal class Menus
     {
 
-        internal virtual void Executar(BandaDal bandaDal)
+        internal virtual void Executar(Dal<Banda> bandaDal)
         {
             Console.Clear();
-            Console.WriteLine("TESTE");
         }
 
         //Cria um título composto com * como borda

@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScreenSound.Models;
-using System.Collections.Generic;
-using System;
 
 namespace ScreenSound.Banco;
 

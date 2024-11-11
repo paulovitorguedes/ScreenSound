@@ -6,7 +6,7 @@ namespace ScreenSound.Menus
     internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(BandaDal bandaDal)
+        internal override void Executar(Dal<Banda> bandaDal)
         {
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar(bandaDal);
@@ -56,13 +56,14 @@ namespace ScreenSound.Menus
             Console.Clear();
         }
 
-        private void ExcluirBanda(BandaDal bandaDal)
+        private void ExcluirBanda(Dal<Banda> bandaDal)
         {
             Console.Write("Digite o nome da banda que deseja Excluir: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
-            if (banda != null)
+            //Banda banda = bandaDal.ListarBandaPor(nomeDaBanda);
+            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
+            if (banda is not null)
             {
                 try
                 {
@@ -86,13 +87,13 @@ namespace ScreenSound.Menus
 
 
 
-        private void AlterarBanda(BandaDal bandaDal)
+        private void AlterarBanda(Dal<Banda> bandaDal)
         {
             Console.Write("Digite o nome da banda que deseja Alterar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
-            if (banda != null)
+            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
+            if (banda is not null)
             {
                 try
                 {
@@ -133,7 +134,7 @@ namespace ScreenSound.Menus
 
 
 
-        void CadastrarBanda(BandaDal bandaDal)
+        void CadastrarBanda(Dal<Banda> bandaDal)
         {
             Console.Write("Digite o nome da banda que deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
@@ -141,9 +142,9 @@ namespace ScreenSound.Menus
             Console.Write("Digite uma rápida biografia da Banda: ");
             string bioDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPorNome(nomeDaBanda);
+            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
             //Verifica se existe a Banda cadadtrada
-            if (banda == null)
+            if (banda is null)
             {
                 banda = new(nomeDaBanda, bioDaBanda);
                 try

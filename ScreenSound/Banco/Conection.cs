@@ -1,4 +1,14 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
+
+
+
+//#####################    Esta classe foi mantida apenas para estudo e não está sendo utilizada
+
+
+
+
+
+using Microsoft.Data.SqlClient;
 using ScreenSound.Models;
 
 namespace ScreenSound.Banco;
