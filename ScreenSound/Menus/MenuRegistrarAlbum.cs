@@ -6,17 +6,21 @@ namespace ScreenSound.Menus
     internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dal<Banda> bandaDal)
+        internal override void Executar()
         {
+            var contex = new ScreenSoundContext();
+            var albumDal = new Dal<Album>(contex);
+            var bandaDal = new Dal<Banda>(contex);
+
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandaDal);
+            base.Executar();
             ExibirTituloDaOpcao("Registro de álbuns");
             Console.Write("\nDigite a banda cujo álbum deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
+            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
             //Verifica se existe a Banda cadadtrada
-            if (banda != null)
+            if (banda is not null)
             {
                 Console.Write("\nAgora digite o título do álbum: ");
 
@@ -35,23 +39,34 @@ namespace ScreenSound.Menus
                     else estaVazio = false;
 
                 } while (estaVazio);
-                
-                Album album = new(tituloAlbum);
 
-                //Banda banda = bandasRegistradas[nomeDaBanda];
+                Album album = albumDal.ListarPor(a => a.Nome.Equals(tituloAlbum)).ToList()[0];
+             
 
-                //Busca na lista de Albuns cadastrado na classe Banda se já existe registrado no nome do álbum
-                Album existeAlbum = banda.Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
-                if (existeAlbum == null)
+                if (album is null && album?.artista_id != banda.Id)
                 {
-                    banda.AdicionarAlbum(album);
-                    Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso! \nAguarde . . .");
-                    //Thread.Sleep(2000);
+                    album = new(tituloAlbum);
+                    album.artista_id = banda.Id;
+
+                    
                 }
                 else
                 {
                     Console.WriteLine($"\nO Álbum: {tituloAlbum} já encontra-se em nosso cadastro da banda {nomeDaBanda}\nTente novamente . . .");
                 }
+
+                try
+                {
+                    albumDal.Adicionar(album);
+                    Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso! \nAguarde . . .");
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+  
             }
             else
             {

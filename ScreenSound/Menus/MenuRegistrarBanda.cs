@@ -6,10 +6,13 @@ namespace ScreenSound.Menus
     internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dal<Banda> bandaDal)
+        internal override void Executar()
         {
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandaDal);
+            base.Executar();
+
+            var contex = new ScreenSoundContext();
+            var bandaDal = new Dal<Banda>(contex);
 
             ExibirTituloDaOpcao("Cadastro de bandas");
 
@@ -45,9 +48,11 @@ namespace ScreenSound.Menus
                 Console.WriteLine("Opção inválida! Tente novamente.");
                 Console.WriteLine("Digitr ENTER para continuar . . .");
                 Console.ReadLine();
-                Executar(bandaDal);
+                Executar();
             }
         }
+
+
 
         private void SairBanda()
         {
@@ -56,29 +61,37 @@ namespace ScreenSound.Menus
             Console.Clear();
         }
 
+
+
+
         private void ExcluirBanda(Dal<Banda> bandaDal)
         {
             Console.Write("Digite o nome da banda que deseja Excluir: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            //Banda banda = bandaDal.ListarBandaPor(nomeDaBanda);
-            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
-            if (banda is not null)
+
+            try
             {
-                try
+                //Verifica se existe a Banda cadadtrada
+                //Busca uma lista de bandas com o nome estipulado em nomeDaBanda
+                //A lista será vazia caso não encontre algum cadastro de banda com o nome citado
+                List<Banda> bandas = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList();
+                if (bandas.Count > 0)
                 {
-                    bandaDal.Deletar(banda);
+                    bandaDal.Deletar(bandas.FirstOrDefault(b => b.Nome.Equals(nomeDaBanda))!);
                     Console.WriteLine($"\nA banda {nomeDaBanda} foi removida com sucesso!\nAguarde . . .");
                     SairBanda();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Falha apresentada: {ex.Message}");
-                    Console.Write("\n\nDigite ENTER para continuar ");
-                    Console.ReadKey();
-                    Executar(bandaDal);
-                }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Executar();
+            }
+            
+            
         }
 
 
@@ -92,39 +105,45 @@ namespace ScreenSound.Menus
             Console.Write("Digite o nome da banda que deseja Alterar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
-            if (banda is not null)
+
+            try
             {
-                try
+                //Verifica se existe a Banda cadadtrada
+                //Busca uma lista de bandas com o nome estipulado em nomeDaBanda
+                //A lista será vazia caso não encontre algum cadastro de banda com o nome citad
+                List<Banda> bandas = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList();
+                if (bandas.Count > 0)
                 {
                     Console.Write("Digite o novo nome da banda: ");
-                    nomeDaBanda = Console.ReadLine()!.ToUpper();
+                    string novoNomeDaBanda = Console.ReadLine()!.ToUpper();
 
                     Console.Write("Digite uma rápida biografia da Banda: ");
                     string bioDaBanda = Console.ReadLine()!.ToUpper();
-                    banda.Nome = nomeDaBanda;
+
+                    Banda banda = bandas.FirstOrDefault(b => b.Nome.Equals(nomeDaBanda))!;
+                    banda.Nome = novoNomeDaBanda;
                     banda.Bio = bioDaBanda;
                     bandaDal.Alterar(banda);
-                    //bandaDal.Alterar(new Banda(nomeDaBanda, bioDaBanda) { Id = 3002 });
                     Console.WriteLine($"\nA banda {nomeDaBanda} foi alterada com sucesso!\nAguarde . . .");
                     SairBanda();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Falha apresentada: {ex.Message}");
-                    Console.Write("\n\nDigite ENTER para continuar ");
-                    Console.ReadKey();
-                    Executar(bandaDal);
-                }
 
+                }
+                else
+                {
+                    Console.WriteLine($"\nA Banda: {nomeDaBanda} não foi encontrada em nosso cadastro de bandas!\nTente novamente");
+                    Console.Write("\n\nDigite ENTER para continuar . . . ");
+                    Console.ReadKey();
+                    Executar();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"\nA Banda: {nomeDaBanda} não foi encontrada em nosso cadastro de bandas!\nTente novamente");
-                Console.Write("\n\nDigite ENTER para continuar . . . ");
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
                 Console.ReadKey();
-                Executar(bandaDal);
+                Executar();
             }
+            
         }
 
 
@@ -138,37 +157,39 @@ namespace ScreenSound.Menus
         {
             Console.Write("Digite o nome da banda que deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
-
-            Console.Write("Digite uma rápida biografia da Banda: ");
-            string bioDaBanda = Console.ReadLine()!.ToUpper();
-
-            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
-            //Verifica se existe a Banda cadadtrada
-            if (banda is null)
+                        
+            try
             {
-                banda = new(nomeDaBanda, bioDaBanda);
-                try
+                //Verifica se existe a Banda cadadtrada
+                //Busca uma lista de bandas com o nome estipulado em nomeDaBanda
+                //A lista será vazia caso não encontre algum cadastro de banda com o nome citado
+                List<Banda> bandas = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList();
+                if (bandas.Count > 0)
                 {
+                    Console.WriteLine($"\nA Banda: {nomeDaBanda} já encontra-se em nosso cadastro de bandas\nTente novamente . . .");
+                    Console.Write("\n\nDigite ENTER para continuar ");
+                    Console.ReadKey();
+                    Executar();
+                }
+                else
+                {
+                    Console.Write("Digite uma rápida biografia da Banda: ");
+                    string bioDaBanda = Console.ReadLine()!.ToUpper();
+
+                    Banda banda = new(nomeDaBanda, bioDaBanda);
                     bandaDal.Adicionar(banda);
                     Console.WriteLine($"\nA banda {nomeDaBanda} foi registrada com sucesso!\nAguarde . . .");
                     SairBanda();
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Falha apresentada: {ex.Message}");
-                    Console.Write("\n\nDigite ENTER para continuar ");
-                    Console.ReadKey();
-                    Executar(bandaDal);
-                }
-               
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"\nA Banda: {nomeDaBanda} já encontra-se em nosso cadastro de bandas\nTente novamente . . .");
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
                 Console.Write("\n\nDigite ENTER para continuar ");
                 Console.ReadKey();
-                Executar(bandaDal);
+                Executar();
             }
+
         }
     }
 }

@@ -6,17 +6,20 @@ namespace ScreenSound.Menus
     internal class MenuExibirDetalhesBanda : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dal<Banda> bandaDal)
+        internal override void Executar()
         {
+            var contex = new ScreenSoundContext();
+            var bandaDal = new Dal<Banda>(contex);
+
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandaDal);
+            base.Executar();
             ExibirTituloDaOpcao("Exibir detalhes da banda");
             Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
-            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
+            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
 
             //Verifica se existe a Banda cadastrada
-            if (banda != null)
+            if (banda is not null)
             {
                 // Apresenta o nome de todos os Álbum da Banda selecionada
                 Console.WriteLine($"\n\nA banda {nomeDaBanda} possui o(s) álbun(s) cadastrado(s): ");

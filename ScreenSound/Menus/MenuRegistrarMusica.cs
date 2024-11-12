@@ -6,15 +6,18 @@ namespace ScreenSound.Menus
     internal class MenuRegistrarMusica : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dal<Banda> bandaDal)
+        internal override void Executar()
         {
+            var contex = new ScreenSoundContext();
+            var bandaDal = new Dal<Banda>(contex);
+
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandaDal);
+            base.Executar();
             ExibirTituloDaOpcao("Registro de músicas");
             Console.Write("Digite a banda cujo música deseja registrar: ");
             string nomeDaBanda = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarBandaPor(a => a.Nome.Equals(nomeDaBanda))!;
+            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
             //Verifica se existe a Banda cadadtrada
             if (banda == null)
             {

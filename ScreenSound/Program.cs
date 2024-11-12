@@ -38,8 +38,8 @@ using ScreenSound.Models;
 //try
 //{
 
-//var contex = new ScreenSoundContext();
-//var bandaDal = new BandaDal(contex);
+//    var contex = new ScreenSoundContext();
+//    var bandaDal = new Dal<Banda>(contex);
 
 //    //Adiciona a Banda no banco
 //    //bandaDal.Adicionar(new Banda("Gilberto Gil", "Gilberto Gil é um cantor, compositor e instrumentista brasileiro, nascido em 26 de junho de 1942 em Salvador, Bahia, e um dos criadores do Movimento Tropicalista.."));
@@ -86,8 +86,8 @@ internal partial class Program
     private static void Main(string[] args)
     {
 
-        var contex = new ScreenSoundContext();
-        var dal = new Dal<Banda>(contex);
+        //var contex = new ScreenSoundContext();
+        //var dal = new Dal<Banda>(contex);
         //Dictionary<string, Banda> bandasRegistradas = [];
 
         Dictionary<int, Menus> opcoes = [];
@@ -144,7 +144,7 @@ internal partial class Program
             if (ehNumero && opcoes.ContainsKey(opcaoEscolhidaNumerica))
             {
                 Menus MenuASerExibido = opcoes[opcaoEscolhidaNumerica];
-                MenuASerExibido.Executar(dal);
+                MenuASerExibido.Executar();
                 if (opcaoEscolhidaNumerica > 0) ExibirOpcoesDoMenu();
             }
             else

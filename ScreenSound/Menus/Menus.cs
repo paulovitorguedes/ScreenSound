@@ -6,7 +6,7 @@ namespace ScreenSound.Menus
     internal class Menus
     {
 
-        internal virtual void Executar(Dal<Banda> bandaDal)
+        internal virtual void Executar()
         {
             Console.Clear();
         }

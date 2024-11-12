@@ -6,10 +6,13 @@ namespace ScreenSound.Menus
     internal class MenuMostrarBandas : Menus //Extend a classe Menus como herança
     {
         //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-        internal override void Executar(Dal<Banda> bandaDal)
+        internal override void Executar()
         {
+            var contex = new ScreenSoundContext();
+            var bandaDal = new Dal<Banda>(contex);
+
             //base = Chama primeiramente o método da classe base (PAI) 
-            base.Executar(bandaDal);
+            base.Executar();
             ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
 
             foreach (var banda in bandaDal.Listar())

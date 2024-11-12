@@ -1,4 +1,6 @@
-﻿namespace ScreenSound.Banco
+﻿using ScreenSound.Models;
+
+namespace ScreenSound.Banco
 {
     internal class Dal<T> where T : class
     {
@@ -43,9 +45,9 @@
 
 
 
-        public T? ListarBandaPor(Func<T, bool> condicao)
+        public IEnumerable<T> ListarPor(Func<T, bool> condicao)
         {
-            return _context.Set<T>().FirstOrDefault(condicao);
+            return _context.Set<T>().Where(condicao).ToList();
         }
 
         //Documentação do Func
