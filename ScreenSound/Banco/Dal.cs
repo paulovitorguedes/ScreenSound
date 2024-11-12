@@ -1,6 +1,4 @@
-﻿using ScreenSound.Models;
-
-namespace ScreenSound.Banco
+﻿namespace ScreenSound.Banco
 {
     internal class Dal<T> where T : class
     {

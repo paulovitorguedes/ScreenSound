@@ -8,31 +8,31 @@ internal class MenuExibirDetalhesAlbum : Menus
     {
         var contex = new ScreenSoundContext();
         var albumDal = new Dal<Album>(contex);
-        var bandaDal = new Dal<Banda>(contex);
+        var artistaDal = new Dal<Artista>(contex);
 
-        int bandaId = 0;
+        int aristaId = 0;
 
         base.Executar();
-        ExibirTituloDaOpcao("Exibindo todos os albuns registrados por banda");
+        ExibirTituloDaOpcao("Exibindo todos os albuns registrados por Artista");
 
-        Console.WriteLine("Enre com o nome da banda para conhecer os álbuns: ");
-        string nomeDaBanda = Console.ReadLine()!;
+        Console.WriteLine("Enre com o nome do artista para conhecer os álbuns: ");
+        string nomeDoArtista = Console.ReadLine()!;
 
-        if (nomeDaBanda != string.Empty)
+        if (nomeDoArtista != string.Empty)
         {
             try
             {
-                Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
-                if (banda is not null) bandaId = banda.Id;
+                Artista artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList()[0];
+                if (artistas is not null) aristaId = artistas.Id;
                 else
                 {
-                    Console.WriteLine($"Não encontramos a Banda: {nomeDaBanda} em nosso cadastro!\nTente Novamente");
+                    Console.WriteLine($"Não encontramos a Artista: {nomeDoArtista} em nosso cadastro!\nTente Novamente");
                     Console.Write("Dogite ENTER para continuar . . .");
                     Console.ReadLine();
                     Executar();
                 }
 
-                Album album = albumDal.ListarPor(a => a.artista_id == bandaId).ToList()[0];
+                Album album = albumDal.ListarPor(a => a.Artista_id == aristaId).ToList()[0];
                 //foreach (var a in album)
                 //{
                 //    Console.WriteLine($"Album: {album}");
@@ -45,17 +45,6 @@ internal class MenuExibirDetalhesAlbum : Menus
                 Console.ReadKey();
                 Executar();
             }
-
-        }
-
-
-
-        try
-        {
-            
-        }
-        catch (Exception ex)
-        {
 
         }
 

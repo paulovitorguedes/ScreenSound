@@ -9,15 +9,15 @@ namespace ScreenSound.Menus
         internal override void Executar()
         {
             var contex = new ScreenSoundContext();
-            var bandaDal = new Dal<Banda>(contex);
+            var artistaDal = new Dal<Artista>(contex);
 
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar();
             ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
 
-            foreach (var banda in bandaDal.Listar())
+            foreach (var astista in artistaDal.Listar())
             {
-                Console.WriteLine($"Banda: {banda}");
+                Console.WriteLine($"Artista: {astista}");
             }
 
             Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");

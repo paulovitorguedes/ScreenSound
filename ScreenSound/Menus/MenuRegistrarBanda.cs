@@ -12,9 +12,9 @@ namespace ScreenSound.Menus
             base.Executar();
 
             var contex = new ScreenSoundContext();
-            var bandaDal = new Dal<Banda>(contex);
+            var artistaDal = new Dal<Artista>(contex);
 
-            ExibirTituloDaOpcao("Cadastro de bandas");
+            ExibirTituloDaOpcao("Cadastro de artistas");
 
             Console.WriteLine("\nDigite 1 para Cadastrar");
             Console.WriteLine("Digite 2 para Alterar");
@@ -30,13 +30,13 @@ namespace ScreenSound.Menus
                 switch (opcaoEscolhida)
                 {
                     case "1":
-                        CadastrarBanda(bandaDal);
+                        CadastrarBanda(artistaDal);
                         break;
                     case "2":
-                        AlterarBanda(bandaDal);
+                        AlterarBanda(artistaDal);
                         break;
                     case "3":
-                        ExcluirBanda(bandaDal);
+                        ExcluirBanda(artistaDal);
                         break;
                     case "0":
                         SairBanda();
@@ -64,22 +64,22 @@ namespace ScreenSound.Menus
 
 
 
-        private void ExcluirBanda(Dal<Banda> bandaDal)
+        private void ExcluirBanda(Dal<Artista> artistaDal)
         {
             Console.Write("Digite o nome da banda que deseja Excluir: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+            string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
 
             try
             {
-                //Verifica se existe a Banda cadadtrada
-                //Busca uma lista de bandas com o nome estipulado em nomeDaBanda
-                //A lista será vazia caso não encontre algum cadastro de banda com o nome citado
-                List<Banda> bandas = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList();
-                if (bandas.Count > 0)
+                //Verifica se existe a Artista cadadtrada
+                //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
+                //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
                 {
-                    bandaDal.Deletar(bandas.FirstOrDefault(b => b.Nome.Equals(nomeDaBanda))!);
-                    Console.WriteLine($"\nA banda {nomeDaBanda} foi removida com sucesso!\nAguarde . . .");
+                    artistaDal.Deletar(artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArtista))!);
+                    Console.WriteLine($"\nA banda {nomeDoArtista} foi removida com sucesso!\nAguarde . . .");
                     SairBanda();
                 }
             }
@@ -100,37 +100,37 @@ namespace ScreenSound.Menus
 
 
 
-        private void AlterarBanda(Dal<Banda> bandaDal)
+        private void AlterarBanda(Dal<Artista> artistaDal)
         {
             Console.Write("Digite o nome da banda que deseja Alterar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+            string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
 
             try
             {
-                //Verifica se existe a Banda cadadtrada
-                //Busca uma lista de bandas com o nome estipulado em nomeDaBanda
-                //A lista será vazia caso não encontre algum cadastro de banda com o nome citad
-                List<Banda> bandas = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList();
-                if (bandas.Count > 0)
+                //Verifica se existe a Artista cadadtrada
+                //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
+                //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
                 {
                     Console.Write("Digite o novo nome da banda: ");
-                    string novoNomeDaBanda = Console.ReadLine()!.ToUpper();
+                    string novoNomeDoArtista = Console.ReadLine()!.ToUpper();
 
-                    Console.Write("Digite uma rápida biografia da Banda: ");
-                    string bioDaBanda = Console.ReadLine()!.ToUpper();
+                    Console.Write("Digite uma rápida biografia da banda: ");
+                    string bioDoArtista = Console.ReadLine()!.ToUpper();
 
-                    Banda banda = bandas.FirstOrDefault(b => b.Nome.Equals(nomeDaBanda))!;
-                    banda.Nome = novoNomeDaBanda;
-                    banda.Bio = bioDaBanda;
-                    bandaDal.Alterar(banda);
-                    Console.WriteLine($"\nA banda {nomeDaBanda} foi alterada com sucesso!\nAguarde . . .");
+                    Artista artista = artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArtista))!;
+                    artista.Nome = novoNomeDoArtista;
+                    artista.Bio = bioDoArtista;
+                    artistaDal.Alterar(artista);
+                    Console.WriteLine($"\nA banda {nomeDoArtista} foi alterada com sucesso!\nAguarde . . .");
                     SairBanda();
 
                 }
                 else
                 {
-                    Console.WriteLine($"\nA Banda: {nomeDaBanda} não foi encontrada em nosso cadastro de bandas!\nTente novamente");
+                    Console.WriteLine($"\nA banda: {nomeDoArtista} não foi encontrada em nosso cadastro de artistas!\nTente novamente");
                     Console.Write("\n\nDigite ENTER para continuar . . . ");
                     Console.ReadKey();
                     Executar();
@@ -153,32 +153,32 @@ namespace ScreenSound.Menus
 
 
 
-        void CadastrarBanda(Dal<Banda> bandaDal)
+        void CadastrarBanda(Dal<Artista> artistaDal)
         {
             Console.Write("Digite o nome da banda que deseja registrar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+            string nomeDoArtista = Console.ReadLine()!.ToUpper();
                         
             try
             {
-                //Verifica se existe a Banda cadadtrada
-                //Busca uma lista de bandas com o nome estipulado em nomeDaBanda
-                //A lista será vazia caso não encontre algum cadastro de banda com o nome citado
-                List<Banda> bandas = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList();
-                if (bandas.Count > 0)
+                //Verifica se existe a Artista cadadtrada
+                //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
+                //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
                 {
-                    Console.WriteLine($"\nA Banda: {nomeDaBanda} já encontra-se em nosso cadastro de bandas\nTente novamente . . .");
+                    Console.WriteLine($"\nA banda: {nomeDoArtista} já encontra-se em nosso cadastro de artistas\nTente novamente . . .");
                     Console.Write("\n\nDigite ENTER para continuar ");
                     Console.ReadKey();
                     Executar();
                 }
                 else
                 {
-                    Console.Write("Digite uma rápida biografia da Banda: ");
-                    string bioDaBanda = Console.ReadLine()!.ToUpper();
+                    Console.Write("Digite uma rápida biografia da banda: ");
+                    string bioDoArtista = Console.ReadLine()!.ToUpper();
 
-                    Banda banda = new(nomeDaBanda, bioDaBanda);
-                    bandaDal.Adicionar(banda);
-                    Console.WriteLine($"\nA banda {nomeDaBanda} foi registrada com sucesso!\nAguarde . . .");
+                    Artista artista = new(nomeDoArtista, bioDoArtista);
+                    artistaDal.Adicionar(artista);
+                    Console.WriteLine($"\nA banda {nomeDoArtista} foi registrada com sucesso!\nAguarde . . .");
                     SairBanda();
                 }
             }

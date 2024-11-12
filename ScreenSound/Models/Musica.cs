@@ -6,7 +6,7 @@ internal class Musica
     {
         
     }
-    public Musica(Banda artista, string nome)
+    public Musica(Artista artista, string nome)
     {
         Artista = artista;
         Nome = nome;
@@ -14,7 +14,7 @@ internal class Musica
 
     public int Id { get; set; }
     public string Nome { get; }
-    public Banda Artista { get; }
+    public Artista Artista { get; }
     public int Duracao { get; set; }
     public bool Disponivel { get; set; }
     public string DescricaoResumida => $"A música {Nome} pertence à banda {Artista}";

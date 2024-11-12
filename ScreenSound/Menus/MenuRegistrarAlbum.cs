@@ -10,72 +10,71 @@ namespace ScreenSound.Menus
         {
             var contex = new ScreenSoundContext();
             var albumDal = new Dal<Album>(contex);
-            var bandaDal = new Dal<Banda>(contex);
+            var artistaDal = new Dal<Artista>(contex);
 
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar();
             ExibirTituloDaOpcao("Registro de álbuns");
-            Console.Write("\nDigite a banda cujo álbum deseja registrar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+            Console.Write("\nDigite a artista cujo álbum deseja registrar: ");
+            string nomeDoArista = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
-            //Verifica se existe a Banda cadadtrada
-            if (banda is not null)
+            try
             {
-                Console.Write("\nAgora digite o título do álbum: ");
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArista)).ToList();
 
-                string tituloAlbum = "";
-                bool estaVazio = false;
-                do
+                //Verifica se existe a Artista cadadtrada
+                if (artistas.Count > 0)
                 {
-                    tituloAlbum = Console.ReadLine()!.ToUpper();
+                    Console.Write("\nAgora digite o título do álbum: ");
 
-                    if (tituloAlbum == "")
+                    string tituloAlbum = "";
+                    do
                     {
-                        estaVazio = true;
-                        Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
-                        Console.WriteLine("\nAlbum: ");
+                        tituloAlbum = Console.ReadLine()!.ToUpper();
+
+                        if (tituloAlbum == string.Empty)
+                        {
+                            Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                            Console.WriteLine("\nAlbum: ");
+                        }
+
+                    } while (tituloAlbum == string.Empty);
+
+
+                    List<Album> albuns = albumDal.ListarPor(a => a.Nome.Equals(tituloAlbum)).ToList();
+                    Artista artista = artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArista))!;
+
+                    if (albuns.Count > 0)
+                    {
+                        Console.WriteLine($"\nO Álbum: {tituloAlbum} já encontra-se em nosso cadastro do artista {nomeDoArista}\nTente novamente . . .");
                     }
-                    else estaVazio = false;
+                    else
+                    {
+                        Album album = new(tituloAlbum);
+                        album.Artista_id = artista.Id;
+                        albumDal.Adicionar(album);
+                        Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArista} foi registrado com sucesso! \nAguarde . . .");
+                    }
 
-                } while (estaVazio);
-
-                Album album = albumDal.ListarPor(a => a.Nome.Equals(tituloAlbum)).ToList()[0];
-             
-
-                if (album is null && album?.artista_id != banda.Id)
-                {
-                    album = new(tituloAlbum);
-                    album.artista_id = banda.Id;
-
-                    
                 }
                 else
                 {
-                    Console.WriteLine($"\nO Álbum: {tituloAlbum} já encontra-se em nosso cadastro da banda {nomeDaBanda}\nTente novamente . . .");
+                    Console.WriteLine($"\nA Artista {nomeDoArista} não foi encontrada em nossos cadastros\nTente novamente . . .");
                 }
 
-                try
-                {
-                    albumDal.Adicionar(album);
-                    Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDaBanda} foi registrado com sucesso! \nAguarde . . .");
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
-
-  
+                Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+                Console.ReadKey();
+                Console.Clear();
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"\nA Banda {nomeDaBanda} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Console.Clear();
             }
 
-            Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
-            Console.ReadKey();
-            Console.Clear();
+
         }
     }
 }

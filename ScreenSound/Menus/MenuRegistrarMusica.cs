@@ -9,28 +9,28 @@ namespace ScreenSound.Menus
         internal override void Executar()
         {
             var contex = new ScreenSoundContext();
-            var bandaDal = new Dal<Banda>(contex);
+            var artistaDal = new Dal<Artista>(contex);
 
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar();
             ExibirTituloDaOpcao("Registro de músicas");
-            Console.Write("Digite a banda cujo música deseja registrar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+            Console.Write("Digite a artista cujo música deseja registrar: ");
+            string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
-            //Verifica se existe a Banda cadadtrada
-            if (banda == null)
+            Artista artista = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList()[0];
+            //Verifica se existe a Artista cadadtrada
+            if (artista is null)
             {
-                //Banda banda = bandasRegistradas[nomeDaBanda];
+                //Artista artista = bandasRegistradas[nomeDoArtista];
 
-                //Verifica se a Banda já possui algum Álbum cadastrado
-                if (banda.Albuns.Count != 0)
+                //Verifica se a Artista já possui algum Álbum cadastrado
+                if (artista.Albuns.Count != 0)
                 {
                     Console.WriteLine("\nInforme quais dos álbuns abaixo deseja adicionar uma música:");
 
-                    // Apresenta o nome de todos os Álbum da Banda selecionada
+                    // Apresenta o nome de todos os Álbum da Artista selecionada
                     int cont = 1;
-                    foreach (Album a in banda.Albuns)
+                    foreach (Album a in artista.Albuns)
                     {
                         Console.WriteLine($"Álbum{cont++}: {a.Nome}");
                     }
@@ -38,7 +38,7 @@ namespace ScreenSound.Menus
                     Console.Write("\n\nÁlbum: ");
                     string tituloAlbum = Console.ReadLine()!.ToUpper();
 
-                    Album album = banda.Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
+                    Album album = artista.Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
 
                     if (album != null)
                     {
@@ -79,20 +79,20 @@ namespace ScreenSound.Menus
 
                         
 
-                        Musica musica = new(banda, tituloMusica)
+                        Musica musica = new(artista, tituloMusica)
                         {
                             Duracao = duracaoMusica,
                             Disponivel = boolDisponivel
                         };
 
-                        //Adiciona o obj Musica ao álbum cadastrado na lista de álbuns da classe Banda
-                        foreach (Album a in banda.Albuns)
+                        //Adiciona o obj Musica ao álbum cadastrado na lista de álbuns da classe Artista
+                        foreach (Album a in artista.Albuns)
                         {
                             if (a.Nome.Equals(tituloAlbum)) a.AdicionarMusica(musica); break;
 
                         }
 
-                        Console.WriteLine($"\nA música {tituloMusica} de {nomeDaBanda} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
+                        Console.WriteLine($"\nA música {tituloMusica} de {nomeDoArtista} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
                         //Thread.Sleep(2000);
 
                     }
@@ -103,13 +103,13 @@ namespace ScreenSound.Menus
                 }
                 else
                 {
-                    Console.WriteLine($"A Banda {nomeDaBanda} não possui Álbuns cadastrados\nTente primeiramente cadastrar um Álbum.");
+                    Console.WriteLine($"A Artista {nomeDoArtista} não possui Álbuns cadastrados\nTente primeiramente cadastrar um Álbum.");
                 }
 
             }
             else
             {
-                Console.WriteLine($"A Banda {nomeDaBanda} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                Console.WriteLine($"A Artista {nomeDoArtista} não foi encontrada em nossos cadastros\nTente novamente . . .");
             }
 
             Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");

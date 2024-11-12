@@ -1,6 +1,4 @@
-﻿using ScreenSound.Banco;
-using ScreenSound.Menus;
-using ScreenSound.Models;
+﻿using ScreenSound.Menus;
 
 //A instrução using tem como objetivo principal garantir que objetos descartáveis sejam utilizados corretamente.Quando declaramos uma variável local como using, ela é descartada no final do escopo em que ela foi declarada, portanto, será descartada ao finalizar a execução do try. Com isso conseguimos aplicar uma boa prática e gerenciar melhor os recursos que estão sendo utilizados e mantê-los somente quando estiverem sendo utilizados.
 
@@ -39,21 +37,21 @@ using ScreenSound.Models;
 //{
 
 //    var contex = new ScreenSoundContext();
-//    var bandaDal = new Dal<Banda>(contex);
+//    var bandaDal = new Dal<Artista>(contex);
 
-//    //Adiciona a Banda no banco
-//    //bandaDal.Adicionar(new Banda("Gilberto Gil", "Gilberto Gil é um cantor, compositor e instrumentista brasileiro, nascido em 26 de junho de 1942 em Salvador, Bahia, e um dos criadores do Movimento Tropicalista.."));
-
-
-
-
-//    //altera a Banda de ID = 1 para a banda informada
-//    //bandaDal.Alterar(new Banda("TESTE SOUND", "TEST TESTE SOUND") { Id = 3002 });
+//    //Adiciona a Artista no banco
+//    //bandaDal.Adicionar(new Artista("Gilberto Gil", "Gilberto Gil é um cantor, compositor e instrumentista brasileiro, nascido em 26 de junho de 1942 em Salvador, Bahia, e um dos criadores do Movimento Tropicalista.."));
 
 
 
-//    //Deletar a Banda de ID = 1002
-//    //bandaDal.Deletar(new Banda() { Id = 1002 });
+
+//    //altera a Artista de ID = 1 para a banda informada
+//    //bandaDal.Alterar(new Artista("TESTE SOUND", "TEST TESTE SOUND") { Id = 3002 });
+
+
+
+//    //Deletar a Artista de ID = 1002
+//    //bandaDal.Deletar(new Artista() { Id = 1002 });
 
 
 
@@ -87,8 +85,8 @@ internal partial class Program
     {
 
         //var contex = new ScreenSoundContext();
-        //var dal = new Dal<Banda>(contex);
-        //Dictionary<string, Banda> bandasRegistradas = [];
+        //var dal = new Dal<Artista>(contex);
+        //Dictionary<string, Artista> bandasRegistradas = [];
 
         Dictionary<int, Menus> opcoes = [];
         opcoes.Add(1, new MenuRegistrarBanda());

@@ -9,49 +9,74 @@ namespace ScreenSound.Menus
         internal override void Executar()
         {
             var contex = new ScreenSoundContext();
-            var bandaDal = new Dal<Banda>(contex);
+            var artistaDal = new Dal<Artista>(contex);
+            var albumaDal = new Dal<Album>(contex);
 
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar();
             ExibirTituloDaOpcao("Exibir detalhes da banda");
             Console.Write("Digite o nome da banda que deseja conhecer melhor: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
-            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
+            string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
-            //Verifica se existe a Banda cadastrada
-            if (banda is not null)
+
+            try
             {
-                // Apresenta o nome de todos os Álbum da Banda selecionada
-                Console.WriteLine($"\n\nA banda {nomeDaBanda} possui o(s) álbun(s) cadastrado(s): ");
-                int cont = 1;
-                if (banda.Albuns.Count > 0)
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+
+                //Verifica se existe a Artista cadastrada
+                if (artistas.Count > 0)
                 {
-                    foreach (Album a in banda.Albuns)
+                    int artistaId = artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArtista))!.Id;
+                      
+                    List<Album> albuns = albumaDal.ListarPor(a => a.Artista_id == artistaId).ToList();
+
+                    
+
+
+                    int cont = 1;
+                    if (albuns.Count > 0)
                     {
-                        Console.WriteLine($"Álbum{cont++}: {a.Nome} com duração de {a.DuracaoTotal} Segundos.");
+                        Console.WriteLine($"\n\nA banda {nomeDoArtista} possui o(s) álbun(s) cadastrado(s): ");
+
+                        foreach (Album a in albuns)
+                        {
+                            Console.WriteLine($"Álbum{cont++}: {a.Nome} com duração de {a.DuracaoTotal} Segundos.");
+                        }
                     }
+                    else
+                    {
+                        Console.WriteLine("Não foi detectado albuns cadastrados");
+                    }
+
+                    //Console.WriteLine("\nPossui a(s) nota(s) cadastrada(s): ");
+                    //Console.WriteLine("Notas: ");
+                    //foreach (Avaliacao avaliacao in banda.Notas)
+                    //{
+                    //    Console.Write(avaliacao.Nota + " ");
+                    //}
+                    //Console.WriteLine($"Média: {banda.Media}");
                 }
                 else
                 {
-                    Console.WriteLine("Não foi detectado albuns cadastrados");
+                    Console.WriteLine($"\nA banda {nomeDoArtista} não foi encontrada!");
                 }
 
-                Console.WriteLine("\nPossui a(s) nota(s) cadastrada(s): ");
-                Console.WriteLine("Notas: ");
-                foreach (Avaliacao avaliacao in banda.Notas)
-                {
-                    Console.Write(avaliacao.Nota + " ");
-                }
-                Console.WriteLine($"Média: {banda.Media}");
+                Console.WriteLine("\n\nDigite uma tecla para voltar ao menu principal ");
+                Console.ReadKey();
+                Console.Clear();
+
             }
-            else
+            catch (Exception ex)
             {
-                Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Executar();
             }
 
-            Console.WriteLine("\n\nDigite uma tecla para voltar ao menu principal ");
-            Console.ReadKey();
-            Console.Clear();
+            
+
+            
 
         }
     }

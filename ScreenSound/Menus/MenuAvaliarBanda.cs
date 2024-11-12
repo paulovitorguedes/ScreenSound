@@ -10,28 +10,28 @@ namespace ScreenSound.Menus
         {
 
             var contex = new ScreenSoundContext();
-            var bandaDal = new Dal<Banda>(contex);
+            var astistaDal = new Dal<Artista>(contex);
 
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar();
-            ExibirTituloDaOpcao("Avaliar banda");
-            Console.Write("Digite o nome da banda que deseja avaliar: ");
-            string nomeDaBanda = Console.ReadLine()!.ToUpper();
+            ExibirTituloDaOpcao("Avaliar artistas");
+            Console.Write("Digite o nome da artistas que deseja avaliar: ");
+            string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
-            Banda banda = bandaDal.ListarPor(a => a.Nome.Equals(nomeDaBanda)).ToList()[0];
-            if (banda == null)
+            Artista artistas = astistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList()[0];
+            if (artistas == null)
             {
-                Console.WriteLine($"\nA banda {nomeDaBanda} não foi encontrada!");
+                Console.WriteLine($"\nA artistas {nomeDoArtista} não foi encontrada!");
 
             }
             else
             {
-                Console.Write($"Qual a nota que a banda {nomeDaBanda} merece: ");
+                Console.Write($"Qual a nota que a artistas {nomeDoArtista} merece: ");
                 //Avaliacao.Parce é um método static na class Avaliacao transformando a string em int e após criando o obj Avaliação
                 Avaliacao avaliacao = Avaliacao.Parse(Console.ReadLine()!);
 
-                banda.AdicionarNota(avaliacao);
-                Console.WriteLine($"\nA nota {avaliacao.Nota} foi registrada com sucesso para a banda {nomeDaBanda}");
+                artistas.AdicionarNota(avaliacao);
+                Console.WriteLine($"\nA nota {avaliacao.Nota} foi registrada com sucesso para a artistas {nomeDoArtista}");
                 //Thread.Sleep(2000);
             }
 

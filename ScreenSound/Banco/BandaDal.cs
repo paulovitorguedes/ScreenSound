@@ -8,7 +8,7 @@ using ScreenSound.Models;
 
 namespace ScreenSound.Banco;
 
-internal class BandaDal : Dal<Banda>
+internal class BandaDal : Dal<Artista>
 {
 
     
@@ -16,17 +16,17 @@ internal class BandaDal : Dal<Banda>
     //public BandaDal(ScreenSoundContext context) : base(context) { }
 
 
-  /*  public Banda ListarBandaPorNome(string nome)
+  /*  public Artista ListarBandaPorNome(string nome)
     {
 
-        // return _context.Artistas.Where(n => n.Nome.Equals(nome)); //Aqui se houver mais de um cadastro da mesma Banda, retorta  IEnumerable<Banda>
+        // return _context.Artistas.Where(n => n.Nome.Equals(nome)); //Aqui se houver mais de um cadastro da mesma Artista, retorta  IEnumerable<Artista>
         return _context.Artistas.FirstOrDefault(n => n.Nome.Equals(nome))!;
     }
 
   */
 
 
-    /* public override IEnumerable<Banda> Listar()
+    /* public override IEnumerable<Artista> Listar()
      {
         
          //return _context.Artistas.ToList();
@@ -39,7 +39,7 @@ internal class BandaDal : Dal<Banda>
          //Utilizando a classe Conection e inserindo as querys manualmente
 
 
-         //var lista = new List<Banda>();
+         //var lista = new List<Artista>();
 
          ////A instrução using tem como objetivo principal garantir que objetos descartáveis sejam utilizados corretamente.Quando declaramos uma variável local como using, ela é descartada no final do escopo em que ela foi declarada, portanto, será descartada ao finalizar a execução do try. Com isso conseguimos aplicar uma boa prática e gerenciar melhor os recursos que estão sendo utilizados e mantê-los somente quando estiverem sendo utilizados.
          //using var connection = new Connection().ObterConexao();
@@ -57,7 +57,7 @@ internal class BandaDal : Dal<Banda>
          //    string bioBanda = Convert.ToString(dataReader["Bio"]);
          //    int idBanda = Convert.ToInt32(dataReader["Id"]);
 
-         //    Banda banda = new(nomeBanda, bioBanda) { Id = idBanda };
+         //    Artista banda = new(nomeBanda, bioBanda) { Id = idBanda };
 
          //    lista.Add(banda);
          //}
@@ -67,7 +67,7 @@ internal class BandaDal : Dal<Banda>
 
 
 
-    /*  public override void Adicionar(Banda banda)
+    /*  public override void Adicionar(Artista banda)
       {
 
 
@@ -100,7 +100,7 @@ internal class BandaDal : Dal<Banda>
 
 
 
-    /*   public override void Alterar(Banda banda)
+    /*   public override void Alterar(Artista banda)
        {
 
            //Utilizando a classe ScreenSoundContext com o Entuty Framework
@@ -132,7 +132,7 @@ internal class BandaDal : Dal<Banda>
     */
 
 
-    /*   public override void Deletar(Banda banda)
+    /*   public override void Deletar(Artista banda)
        {
 
 

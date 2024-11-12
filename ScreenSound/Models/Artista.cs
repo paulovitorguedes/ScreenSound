@@ -1,16 +1,16 @@
 ﻿namespace ScreenSound.Models;
 
-internal class Banda : IAvaliavel
+internal class Artista : IAvaliavel
 {
     private List<Album> albuns = [];
     private List<Avaliacao> notas = [];
 
     //Construtor Padão
-    public Banda()
+    public Artista()
     {       
     }
 
-    public Banda(string nome, string bio = "")
+    public Artista(string nome, string bio = "")
     {
         Nome = nome;
         Bio = bio;
