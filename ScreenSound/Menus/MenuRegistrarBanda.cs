@@ -52,8 +52,6 @@ namespace ScreenSound.Menus
             }
         }
 
-
-
         private void SairBanda()
         {
             Console.Write("\n\nDigite ENTER para voltar ao menu principal ");
@@ -62,12 +60,19 @@ namespace ScreenSound.Menus
         }
 
 
-
-
         private void ExcluirBanda(Dal<Artista> artistaDal)
         {
             Console.Write("Digite o nome da banda que deseja Excluir: ");
             string nomeDoArtista = Console.ReadLine()!.ToUpper();
+
+            if (nomeDoArtista == string.Empty)
+            {
+                Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+                Console.WriteLine("digite ENTER para continuar...");
+                Console.ReadLine();
+                Console.Clear();
+                Executar();
+            }
 
 
             try
@@ -90,8 +95,8 @@ namespace ScreenSound.Menus
                 Console.ReadKey();
                 Executar();
             }
-            
-            
+
+
         }
 
 
@@ -143,7 +148,7 @@ namespace ScreenSound.Menus
                 Console.ReadKey();
                 Executar();
             }
-            
+
         }
 
 
@@ -157,7 +162,16 @@ namespace ScreenSound.Menus
         {
             Console.Write("Digite o nome da banda que deseja registrar: ");
             string nomeDoArtista = Console.ReadLine()!.ToUpper();
-                        
+
+            if (nomeDoArtista == string.Empty)
+            {
+                Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+                Console.WriteLine("digite ENTER para continuar...");
+                Console.ReadLine();
+                Console.Clear();
+                Executar();
+            }
+
             try
             {
                 //Verifica se existe a Artista cadadtrada

@@ -18,8 +18,8 @@ internal class Album : IAvaliavel
 
     public int Id { get; set; }
     public string Nome { get; set; }
-    public int Artista_id { get; set; }
-    public int Avaliacao_id { get; set; }
+    public int ArtistaId { get; set; }
+    public int AvaliacaoId { get; set; }
     public int DuracaoTotal => musicas.Sum(m => m.Duracao);
     public List<Musica> Musicas => musicas;
 

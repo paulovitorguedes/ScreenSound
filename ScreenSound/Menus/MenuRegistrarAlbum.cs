@@ -15,7 +15,7 @@ namespace ScreenSound.Menus
             //base = Chama primeiramente o método da classe base (PAI) 
             base.Executar();
             ExibirTituloDaOpcao("Registro de álbuns");
-            Console.Write("\nDigite a artista cujo álbum deseja registrar: ");
+            Console.Write("\nDigite a banda cujo álbum deseja registrar: ");
             string nomeDoArista = Console.ReadLine()!.ToUpper();
 
             try
@@ -51,7 +51,7 @@ namespace ScreenSound.Menus
                     else
                     {
                         Album album = new(tituloAlbum);
-                        album.Artista_id = artista.Id;
+                        album.ArtistaId = artista.Id;
                         albumDal.Adicionar(album);
                         Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArista} foi registrado com sucesso! \nAguarde . . .");
                     }

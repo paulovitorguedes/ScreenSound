@@ -14,7 +14,7 @@ internal class ScreenSoundContext : DbContext
     public DbSet<Artista> Artistas { get; set; } //Artistas precisa ser o mesmo nome da tabela do banco de dados
     public DbSet<Album> Albuns { get; set; }
 
-    private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSound;Integrated Security=True;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+    private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSound;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
     //Essa string foi recuperado do "Pesquisador de objetos do SQL Server", clicando com o botão direito no Bando "Screen Sound" em propriedades e na linha Cadeia de Conexão.
 

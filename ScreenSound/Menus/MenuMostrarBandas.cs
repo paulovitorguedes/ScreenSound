@@ -15,11 +15,20 @@ namespace ScreenSound.Menus
             base.Executar();
             ExibirTituloDaOpcao("Exibindo todas as bandas registradas na nossa aplicação");
 
-            foreach (var astista in artistaDal.Listar())
+            try
             {
-                Console.WriteLine($"Artista: {astista}");
+                List<Artista> artistas = artistaDal.Listar().ToList();
+                foreach (Artista a in artistas)
+                {
+                    Console.WriteLine(a.ToString());
+                }
             }
+            catch (Exception ex)
+            {
 
+                Console.WriteLine($"ERRO: {ex}");
+            }
+            
             Console.WriteLine("\nDigite uma tecla para voltar ao menu principal");
             Console.ReadKey();
             Console.Clear();

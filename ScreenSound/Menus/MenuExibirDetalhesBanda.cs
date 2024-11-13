@@ -28,7 +28,7 @@ namespace ScreenSound.Menus
                 {
                     int artistaId = artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArtista))!.Id;
                       
-                    List<Album> albuns = albumaDal.ListarPor(a => a.Artista_id == artistaId).ToList();
+                    List<Album> albuns = albumaDal.ListarPor(a => a.ArtistaId == artistaId).ToList();
 
                     
 

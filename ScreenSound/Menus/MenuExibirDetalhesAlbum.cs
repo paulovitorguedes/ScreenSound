@@ -32,7 +32,7 @@ internal class MenuExibirDetalhesAlbum : Menus
                     Executar();
                 }
 
-                Album album = albumDal.ListarPor(a => a.Artista_id == aristaId).ToList()[0];
+                Album album = albumDal.ListarPor(a => a.ArtistaId == aristaId).ToList()[0];
                 //foreach (var a in album)
                 //{
                 //    Console.WriteLine($"Album: {album}");

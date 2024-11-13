@@ -4,20 +4,22 @@ internal class Artista : IAvaliavel
 {
     private List<Album> albuns = [];
     private List<Avaliacao> notas = [];
+    private int? _avaliacaoId;
 
     //Construtor Padão
     public Artista()
-    {       
+    {
     }
 
-    public Artista(string nome, string bio = "")
+    public Artista(string nome, string bio = "", int? nota = 0)
     {
         Nome = nome;
         Bio = bio;
         FotoPerfil = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png";
+        AvaliacaoId = nota;
     }
 
-    
+
 
     //public double Media => notas.Average(a => a.Nota);
     public double Media
@@ -32,6 +34,19 @@ internal class Artista : IAvaliavel
     public int Id { get; set; }
     public string Nome { get; set; }
     public string Bio { get; set; }
+
+    //??: Este é o operador de coalescência nula. Ele verifica se o valor à esquerda (_avaliacaoId) é null. Se for null, ele retorna o valor à direita (0). Caso contrário, ele retorna o valor à esquerda.
+    
+    public int? AvaliacaoId
+    {
+        get => _avaliacaoId; // Retorna o valor armazenado
+        set
+        {
+            // Se o valor for null, atribui 0 ao campo privado
+            _avaliacaoId = value ?? 0; // Atribui 0 se o valor for null
+        }
+    }
+
     public string FotoPerfil { get; set; }
 
     public List<Album> Albuns => albuns;
