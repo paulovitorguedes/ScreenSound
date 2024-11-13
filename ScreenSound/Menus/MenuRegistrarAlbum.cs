@@ -50,7 +50,7 @@ namespace ScreenSound.Menus
                     }
                     else
                     {
-                        Album album = new(tituloAlbum);
+                        Album album = new(tituloAlbum, 0);
                         album.ArtistaId = artista.Id;
                         albumDal.Adicionar(album);
                         Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArista} foi registrado com sucesso! \nAguarde . . .");

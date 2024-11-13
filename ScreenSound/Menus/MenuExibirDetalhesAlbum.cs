@@ -1,4 +1,5 @@
-﻿using ScreenSound.Banco;
+﻿using Microsoft.IdentityModel.Tokens;
+using ScreenSound.Banco;
 using ScreenSound.Menus;
 using ScreenSound.Models;
 
@@ -15,39 +16,65 @@ internal class MenuExibirDetalhesAlbum : Menus
         base.Executar();
         ExibirTituloDaOpcao("Exibindo todos os albuns registrados por Artista");
 
-        Console.WriteLine("Enre com o nome do artista para conhecer os álbuns: ");
-        string nomeDoArtista = Console.ReadLine()!;
+        Console.Write("Enre com o nome do artista para conhecer os álbuns: ");
+        string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
         if (nomeDoArtista != string.Empty)
         {
             try
             {
-                Artista artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList()[0];
-                if (artistas is not null) aristaId = artistas.Id;
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
+                {
+                    Artista art = artistas.FirstOrDefault(a => a.Nome.Equals(nomeDoArtista))!;
+                    int artistaId = art.Id;
+
+                    List<Album> albuns = albumDal.ListarPor(a => a.ArtistaId == artistaId).ToList();
+
+                    if (albuns.Count > 0)
+                    {
+                        Console.WriteLine($"\nÁlbuns cadadtrados da banda {nomeDoArtista}");
+                        foreach (Album a in albuns)
+                        {
+                            Console.WriteLine(a.ToString());
+                            Sair();
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"A banda {art.Nome} ainda não possui álbum cadastrado.\n Tente novamente ...");
+                        Sair();
+                    }
+                }
                 else
                 {
-                    Console.WriteLine($"Não encontramos a Artista: {nomeDoArtista} em nosso cadastro!\nTente Novamente");
-                    Console.Write("Dogite ENTER para continuar . . .");
-                    Console.ReadLine();
-                    Executar();
+                    Console.WriteLine($"Não encontramos a banda: {nomeDoArtista} em nosso cadastro!\nTente Novamente");
+                    Sair();
+
                 }
 
-                Album album = albumDal.ListarPor(a => a.ArtistaId == aristaId).ToList()[0];
-                //foreach (var a in album)
-                //{
-                //    Console.WriteLine($"Album: {album}");
-                //}
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Falha apresentada: {ex.Message}");
-                Console.Write("\n\nDigite ENTER para continuar ");
-                Console.ReadKey();
-                Executar();
+                Sair();
+
             }
 
         }
+        else
+        {
+            Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+            Sair();
+        }
 
+
+        void Sair()
+        {
+            Console.WriteLine("\n\ndigite ENTER para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+        }
 
     }
 }
