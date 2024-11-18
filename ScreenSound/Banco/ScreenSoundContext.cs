@@ -1,16 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ScreenSound.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using System.Numerics;
-using static Azure.Core.HttpHeader;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using System;
-using Microsoft.EntityFrameworkCore.Migrations.Internal;
-using System.Text;
-using System.Runtime.ConstrainedExecution;
-using System.Runtime.Intrinsics.X86;
 
 namespace ScreenSound.Banco;
 
@@ -24,15 +13,22 @@ internal class ScreenSoundContext : DbContext
 {
     public DbSet<Artista> Artistas { get; set; } //Artistas precisa ser o mesmo nome da tabela do banco de dados
     public DbSet<Album> Albuns { get; set; }
+    public DbSet<Musica> Musicas { get; set; }
+    public DbSet<AvaliacaoAlbum> AvaliacoesAlbum { get; set; }
+    public DbSet<AvaliacaoArtista> AvaliacoesArtista { get; set; }
+    public DbSet<AvaliacaoMusica> AvaliacoesMusica { get; set; }
 
-    private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSoundV0;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+
+    private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSound;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
 
     //Essa string foi recuperado do "Pesquisador de objetos do SQL Server", clicando com o botão direito no Bando "Screen Sound" em propriedades e na linha Cadeia de Conexão.
 
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-       optionsBuilder.UseSqlServer(connectionString);
+        optionsBuilder
+                 .UseSqlServer(connectionString)
+                 .UseLazyLoadingProxies();
     }
 }
 

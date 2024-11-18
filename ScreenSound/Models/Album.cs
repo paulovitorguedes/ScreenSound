@@ -1,73 +1,62 @@
 ﻿namespace ScreenSound.Models;
 
-internal class Album : IAvaliavel
+internal class Album
 {
-    private List<Musica> musicas = new List<Musica>();
-    private List<Avaliacao> notas = new();
-    private int? _avaliacaoId;
 
-    // Construtor padrão
-    public Album()
-    {
-    }
+    public virtual ICollection<Musica> Musicas { get; set; } = new List<Musica>();
+    public virtual ICollection<AvaliacaoAlbum> AvaliacoesAlbum { get; set; } = new List<AvaliacaoAlbum>();
 
-    public Album(string nome, int artista ,int nota = 0)
+
+    public Album(string nome)
     {
         Nome = nome;
-        ArtistaId = artista;
-        AvaliacaoId = nota;
     }
 
     public int Id { get; set; }
     public string Nome { get; set; }
-    public int ArtistaId { get; set; }
+    public virtual Artista? Artista { get; set; }
 
-    public int? AvaliacaoId
-    {
-        get => _avaliacaoId; // Retorna o valor armazenado
-        set
-        {
-            // Se o valor for null, atribui 0 ao campo privado
-            _avaliacaoId = value ?? 0; // Atribui 0 se o valor for null
-        }
-    }
 
-    public int DuracaoTotal => musicas.Sum(m => m.Duracao);
 
-    public List<Musica> Musicas => musicas;
     public void AdicionarMusica(Musica musica)
     {
-        musicas.Add(musica);
+        Musicas.Add(musica);
     }
 
-    public void ExibirMusicasDoAlbum()
+
+    public string ExibirMusicasDoAlbum()
     {
-        Console.WriteLine($"Lista de músicas do álbum {Nome}:\n");
-        foreach (var musica in musicas)
+        string value = "";
+        int count = 1;
+
+        if (Musicas.Count > 0)
         {
-            Console.WriteLine($"Música: {musica.Nome}");
+            foreach (Musica m in Musicas)
+            {
+                value += $"Música{count++}: {m.Nome}";
+            }
         }
-        Console.WriteLine($"\nPara ouvir este álbum inteiro você precisa de {DuracaoTotal}");
+
+        return value;
     }
 
-    public void AdicionarNota(Avaliacao nota)
-    {
-        notas.Add(nota);
-    }
-
-    public double Media
-    {
-        get
-        {
-            if (musicas.Count == 0) return 0;
-            else return notas.Average(a => a.Nota);
-        }
-    }
-
-
-
+  
     public override string ToString()
     {
         return @$"ID: {Id}, Álbum: {Nome}.";
+    }
+
+
+
+    public void AdicionarNota(AvaliacaoAlbum nota)
+    {
+        AvaliacoesAlbum.Add(nota);
+    }
+
+
+
+    public IEnumerable<int> BuscarNotas()
+    {
+        return AvaliacoesAlbum.Select(n => n.Nota).ToList();
     }
 }

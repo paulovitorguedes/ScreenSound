@@ -2,35 +2,42 @@
 
 internal class Musica
 {
-    public Musica()
+    public virtual ICollection<AvaliacaoMusica> AvaliacoesMusica { get; set; } = new List<AvaliacaoMusica>()
+        ;
+    public Musica(string nome)
     {
-
-    }
-    public Musica(Artista artista, string nome)
-    {
-        Artista = artista;
         Nome = nome;
     }
 
     public int Id { get; set; }
     public string Nome { get; set; }
-    public Artista Artista { get; }
     public int Duracao { get; set; }
     public bool Disponivel { get; set; }
-    public string DescricaoResumida => $"A música {Nome} pertence à banda {Artista}";
+    public int? AnoLancamento { get; set; }
+    public virtual Album? Album { get; set; }
 
-    public void ExibirFichaTecnica()
+
+    public override string ToString()
     {
-        Console.WriteLine($"Nome: {Nome}");
-        Console.WriteLine($"Artista: {Artista.Nome}");
-        Console.WriteLine($"Duração: {Duracao}");
-        if (Disponivel)
-        {
-            Console.WriteLine("Disponível no plano.");
-        }
-        else
-        {
-            Console.WriteLine("Adquira o plano Plus+");
-        }
+        return $@"
+        Id: {Id}
+        Nome: {Nome}
+        Duração: {Duracao}
+        Ano de Lançamento: {AnoLancamento}
+        Disponivel: {Disponivel}";
+    }
+
+
+
+    public void AdicionarNota(AvaliacaoMusica nota)
+    {
+        AvaliacoesMusica.Add(nota);
+    }
+
+
+
+    public IEnumerable<int> BuscarNotas()
+    {
+        return AvaliacoesMusica.Select(n => n.Nota).ToList();
     }
 }

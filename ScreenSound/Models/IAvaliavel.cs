@@ -2,8 +2,9 @@
 {
     internal interface IAvaliavel
     {
-        void AdicionarNota(Avaliacao nota);
+        void AdicionarNota(AvaliacaoArtista nota);
 
-        double Media {  get; }
+        public IEnumerable<int> BuscarNotas();
+
     }
 }
