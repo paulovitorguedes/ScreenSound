@@ -1,6 +1,6 @@
 ﻿namespace ScreenSound.Models
 {
-    internal interface IAvaliavel
+    public interface IAvaliavel
     {
         void AdicionarNota(AvaliacaoArtista nota);
 

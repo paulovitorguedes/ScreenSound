@@ -1,6 +1,6 @@
 ﻿namespace ScreenSound.Models;
 
-internal class Artista
+public class Artista
 {
     public virtual ICollection<Album> Albuns { get; set; } = new List<Album>();
     public virtual ICollection<AvaliacaoArtista> AvaliacoesArtista { get; set; } = new List<AvaliacaoArtista>();

@@ -1,6 +1,6 @@
 ﻿namespace ScreenSound.Models;
 
-internal class Album
+public class Album
 {
 
     public virtual ICollection<Musica> Musicas { get; set; } = new List<Musica>();
