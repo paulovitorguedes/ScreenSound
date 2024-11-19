@@ -33,7 +33,7 @@ internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
                     AlterarBanda(artistaDal);
                     break;
                 case "3":
-                    //ExcluirBanda(artistaDal);
+                    ExcluirBanda(artistaDal);
                     break;
                 case "0":
                     SairBanda();
@@ -57,44 +57,56 @@ internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
     }
 
 
-    //private void ExcluirBanda(Dal<Artista> artistaDal)
-    //{
-    //    Console.Write("Digite o nome da banda que deseja Excluir: ");
-    //    string nomeDoArtista = Console.ReadLine()!.ToUpper();
-
-    //    if (nomeDoArtista == string.Empty)
-    //    {
-    //        Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
-    //        Console.WriteLine("digite ENTER para continuar...");
-    //        Console.ReadLine();
-    //        Console.Clear();
-    //        Executar();
-    //    }
 
 
-    //    try
-    //    {
-    //        //Verifica se existe a Artista cadadtrada
-    //        //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
-    //        //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
-    //        List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
-    //        if (artistas.Count > 0)
-    //        {
-    //            artistaDal.Deletar(artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArtista))!);
-    //            Console.WriteLine($"\nA banda {nomeDoArtista} foi removida com sucesso!\nAguarde . . .");
-    //            SairBanda();
-    //        }
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine($"Falha apresentada: {ex.Message}");
-    //        Console.Write("\n\nDigite ENTER para continuar ");
-    //        Console.ReadKey();
-    //        Executar();
-    //    }
+    private void ExcluirBanda(Dal<Artista> artistaDal)
+    {
+        Console.Write("Digite o nome da banda que deseja Excluir: ");
+        string nomeDoArtista = Console.ReadLine()!.ToUpper();
+
+        if (nomeDoArtista == string.Empty) //Se for inserido um valor vazio
+        {
+            Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+            Console.WriteLine("digite ENTER para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+            Executar(artistaDal);
+        }
+
+        else
+        {
+            try
+            {
+                //Verifica se existe a Artista cadadtrada
+                //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
+                //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
+                {
+                    artistaDal.Deletar(artistas.FirstOrDefault(b => b.Nome.Equals(nomeDoArtista))!);
+                    Console.WriteLine($"\nA banda {nomeDoArtista} foi removida com sucesso!\nAguarde . . .");
+                    SairBanda();
+                }
+                else
+                {
+                    Console.WriteLine($"\nA banda: {nomeDoArtista} Não foi encontrada em nossos cadastros\nTente novamente . . .");
+                    Console.Write("\n\nDigite ENTER para continuar ");
+                    Console.ReadKey();
+                    Executar(artistaDal);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Executar(artistaDal);
+            }
+        }
 
 
-    //}
+
+    }
 
 
 
