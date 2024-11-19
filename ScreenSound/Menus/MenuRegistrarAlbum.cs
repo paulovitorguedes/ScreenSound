@@ -31,7 +31,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                     CadastrarAlbum(artistaDal);
                     break;
                 case "2":
-                    //AlterarBanda(artistaDal);
+                    AlterarAlbum(artistaDal);
                     break;
                 case "3":
                     //ExcluirBanda(artistaDal);
@@ -81,7 +81,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                 //List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
                 Artista? artista = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).FirstOrDefault();
 
-                //Verifica se existe a banda cadadtrada
+                //Verifica se existe a banda cadastrada
                 if (artista != null)
                 {
                     Console.Write("\nAgora digite o título do álbum: ");
@@ -132,5 +132,103 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
             }
         }
 
+    }
+
+
+
+
+
+    public void AlterarAlbum(Dal<Artista> artistaDal)
+    {
+        Console.Write("\nDigite a banda cujo álbum deseja registrar: ");
+        string nomeDoArtista = Console.ReadLine()!.ToUpper();
+
+        if (nomeDoArtista == string.Empty) //Se for inserido um valor vazio
+        {
+            Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+            Console.WriteLine("digite ENTER para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+            Executar(artistaDal);
+        }
+        else
+        {
+            try
+            {
+                Artista? artista = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).FirstOrDefault();
+
+                //Verifica se existe a banda cadastrada
+                if (artista != null)
+                {
+
+                    //###################################
+                    //Codigo exibindo uma lista de Albns aqui
+
+
+                    Console.Write("\nAgora digite o título do álbum que deseja alterar: ");
+
+                    string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                    do
+                    {
+                        tituloAlbum = Console.ReadLine()!.ToUpper();
+
+                        if (tituloAlbum == string.Empty)
+                        {
+                            Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                            Console.WriteLine("\nAlbum: ");
+                        }
+
+                    } while (tituloAlbum == string.Empty);
+
+                    Album? album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum));
+
+                    if (album != null)
+                    {
+
+                        Console.Write("\nEntre com o novo título do álbum: ");
+
+                        string novoTituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                        do
+                        {
+                            novoTituloAlbum = Console.ReadLine()!.ToUpper();
+
+                            if (novoTituloAlbum == string.Empty)
+                            {
+                                Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                Console.WriteLine("\nAlbum: ");
+                            }
+
+                        } while (novoTituloAlbum == string.Empty);
+
+                        album.Nome = novoTituloAlbum;
+
+                        artistaDal.Alterar(artista);
+                        Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArtista} foi alterado para {novoTituloAlbum} com sucesso! \nAguarde . . .");
+                        SairAlbum(artistaDal);
+                    }
+                    else
+                    {                       
+                        Console.WriteLine($"\nO álbum {tituloAlbum} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\nA banda {nomeDoArtista} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                }
+
+                Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+                Console.ReadKey();
+                Console.Clear();
+                Executar(artistaDal);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Console.Clear();
+                Executar(artistaDal);
+            }
+        }
     }
 }
