@@ -126,8 +126,8 @@ internal partial class Program
         void ExibirOpcoesDoMenu()
         {
             ExibirLogo();
-            Console.WriteLine("\nDigite 1 para Cadastrar uma banda");
-            Console.WriteLine("Digite 2 para registrar o álbum de uma banda");
+            Console.WriteLine("\nDigite 1 para Cadastrar uma Banda");
+            Console.WriteLine("Digite 2 para Cadastrar um Álbum");
             Console.WriteLine("Digite 3 para registrar uma música de um album");
             Console.WriteLine("Digite 4 para avaliar uma banda");
             Console.WriteLine("Digite 5 para avaliar um álbum");

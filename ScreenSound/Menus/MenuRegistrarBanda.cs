@@ -49,7 +49,7 @@ internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
         }
     }
 
-    private void SairBanda()
+    public void SairBanda()
     {
         Console.Write("\n\nDigite ENTER para voltar ao menu principal ");
         Console.ReadKey();
@@ -59,7 +59,7 @@ internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
 
 
 
-    private void ExcluirBanda(Dal<Artista> artistaDal)
+    public void ExcluirBanda(Dal<Artista> artistaDal)
     {
         Console.Write("Digite o nome da banda que deseja Excluir: ");
         string nomeDoArtista = Console.ReadLine()!.ToUpper();
@@ -114,7 +114,7 @@ internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
 
 
 
-    private void AlterarBanda(Dal<Artista> artistaDal)
+    public void AlterarBanda(Dal<Artista> artistaDal)
     {
         Console.Write("Digite o nome da banda que deseja Alterar: ");
         string nomeDoArtista = Console.ReadLine()!.ToUpper();
@@ -167,7 +167,7 @@ internal class MenuRegistrarBanda : Menus //Extend a classe Menus como herança
 
 
 
-    void CadastrarBanda(Dal<Artista> artistaDal)
+    public void CadastrarBanda(Dal<Artista> artistaDal)
     {
         Console.Write("Digite o nome da banda que deseja registrar: ");
         string nomeDoArtista = Console.ReadLine()!.ToUpper();
