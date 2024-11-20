@@ -1,4 +1,6 @@
-﻿namespace ScreenSound.Models;
+﻿using System.Text;
+
+namespace ScreenSound.Models;
 
 public class Artista
 {
@@ -44,11 +46,12 @@ public class Artista
 
     public override string ToString()
     {
-        return $@"
-        Id: {Id}
-        Nome: {Nome}
-        Foto de Perfil: {FotoPerfil}
-        Bio: {Bio}";
+        var sb = new StringBuilder();
+        sb.AppendLine($"Id: {Id}");
+        sb.AppendLine($"Nome: {Nome}");
+        sb.AppendLine($"Foto de Perfil: {FotoPerfil}");
+        sb.AppendLine($"Bio: {Bio}");
+        return sb.ToString();
     }
 
 

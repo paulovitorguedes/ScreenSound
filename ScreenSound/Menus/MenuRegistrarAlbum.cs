@@ -173,51 +173,54 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                 {
 
                     ListarAlbumporArtista(artista);
-
-                    Console.Write("\nAgora digite o título do álbum que deseja alterar: ");
-
-                    string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
-                    do
+                    if (artista.Albuns.Count() > 0)
                     {
-                        tituloAlbum = Console.ReadLine()!.ToUpper();
+                        Console.Write("\nAgora digite o título do álbum que deseja alterar: ");
 
-                        if (tituloAlbum == string.Empty)
-                        {
-                            Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
-                            Console.WriteLine("\nAlbum: ");
-                        }
-
-                    } while (tituloAlbum == string.Empty);
-
-                    Album? album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum));
-
-                    if (album != null)
-                    {
-
-                        Console.Write("\nEntre com o novo título do álbum: ");
-
-                        string novoTituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                        string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
                         do
                         {
-                            novoTituloAlbum = Console.ReadLine()!.ToUpper();
+                            tituloAlbum = Console.ReadLine()!.ToUpper();
 
-                            if (novoTituloAlbum == string.Empty)
+                            if (tituloAlbum == string.Empty)
                             {
                                 Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
                                 Console.WriteLine("\nAlbum: ");
                             }
 
-                        } while (novoTituloAlbum == string.Empty);
+                        } while (tituloAlbum == string.Empty);
 
-                        album.Nome = novoTituloAlbum;
+                        Album? album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum));
 
-                        artistaDal.Alterar(artista);
-                        Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArtista} foi alterado para {novoTituloAlbum} com sucesso! \nAguarde . . .");
+                        if (album != null)
+                        {
+
+                            Console.Write("\nEntre com o novo título do álbum: ");
+
+                            string novoTituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                            do
+                            {
+                                novoTituloAlbum = Console.ReadLine()!.ToUpper();
+
+                                if (novoTituloAlbum == string.Empty)
+                                {
+                                    Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                    Console.WriteLine("\nAlbum: ");
+                                }
+
+                            } while (novoTituloAlbum == string.Empty);
+
+                            album.Nome = novoTituloAlbum;
+
+                            artistaDal.Alterar(artista);
+                            Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArtista} foi alterado para {novoTituloAlbum} com sucesso! \nAguarde . . .");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\nO álbum {tituloAlbum} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                        }
                     }
-                    else
-                    {
-                        Console.WriteLine($"\nO álbum {tituloAlbum} não foi encontrada em nossos cadastros\nTente novamente . . .");
-                    }
+
                 }
                 else
                 {
@@ -334,12 +337,16 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
 
     public void ListarAlbumporArtista(Artista artista)
     {
-        Console.WriteLine($"\nLISTA DE ALBUM DE {artista.Nome}:");
-        int count = 0;
-        foreach (Album a in artista.Albuns)
-        {
-            Console.WriteLine($"{++count}) {a}");
-        }
-    }
 
+        int count = 0;
+        if (artista.Albuns.Count() > 0)
+        {
+            Console.WriteLine($"\nLISTA DE ALBUM DE {artista.Nome}:");
+            foreach (Album a in artista.Albuns)
+            {
+                Console.WriteLine($"{++count}) {a}");
+            }
+        }
+        Console.WriteLine($"\nO ARTISTA {artista.Nome} AINDA NÃO POSSUI ÁLBUNS CADASTRADOS !");
+    }
 }
