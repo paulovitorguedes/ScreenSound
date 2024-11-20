@@ -92,7 +92,7 @@ internal partial class Program
 
         var contex = new ScreenSoundContext();
         var artistadal = new Dal<Artista>(contex);
-        Dictionary<string, Artista> bandasRegistradas = [];
+        Dictionary<string, Artista> bandasRegistradas = []; //Dicionary para a criação do Menu
 
         Dictionary<int, Menus> opcoes = [];
         opcoes.Add(1, new MenuRegistrarBanda());
