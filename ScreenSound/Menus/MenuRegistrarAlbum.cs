@@ -91,6 +91,8 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                 //Verifica se existe a banda cadastrada
                 if (artista != null)
                 {
+                    ListarAlbumporArtista(artista);
+
                     Console.Write("\nAgora digite o título do álbum: ");
 
                     string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
@@ -170,9 +172,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                 if (artista != null)
                 {
 
-                    //###################################
-                    //Codigo exibindo uma lista de Albns aqui
-
+                    ListarAlbumporArtista(artista);
 
                     Console.Write("\nAgora digite o título do álbum que deseja alterar: ");
 
@@ -215,7 +215,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                         Console.WriteLine($"\nO álbum {tituloAlbum} de {nomeDoArtista} foi alterado para {novoTituloAlbum} com sucesso! \nAguarde . . .");
                     }
                     else
-                    {                       
+                    {
                         Console.WriteLine($"\nO álbum {tituloAlbum} não foi encontrada em nossos cadastros\nTente novamente . . .");
                     }
                 }
@@ -270,10 +270,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                 //Verifica se existe a banda cadastrada
                 if (artista != null)
                 {
-
-                    //###################################
-                    //Codigo exibindo uma lista de Albns aqui
-
+                    ListarAlbumporArtista(artista);
 
                     Console.Write("\nAgora digite o título do álbum que deseja exluir: ");
 
@@ -291,7 +288,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                     } while (tituloAlbum == string.Empty);
 
                     Album? album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum));
-                    
+
 
                     if (album != null)
                     {
@@ -332,4 +329,17 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
             }
         }
     }
+
+
+
+    public void ListarAlbumporArtista(Artista artista)
+    {
+        Console.WriteLine($"\nLISTA DE ALBUM DE {artista.Nome}:");
+        int count = 0;
+        foreach (Album a in artista.Albuns)
+        {
+            Console.WriteLine($"{++count}) {a}");
+        }
+    }
+
 }
