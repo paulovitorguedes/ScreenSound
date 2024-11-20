@@ -33,7 +33,7 @@ internal class MenuRegistrarMusica : Menus //Extend a classe Menus como herança
                     AlterarMusica(artistaDal);
                     break;
                 case "3":
-                    //ExcluirAlbum(artistaDal);
+                    ExcluirMusica(artistaDal);
                     break;
                 case "0":
                     SairMusica();
@@ -366,6 +366,131 @@ internal class MenuRegistrarMusica : Menus //Extend a classe Menus como herança
             }
         }
     }
+
+
+
+
+
+
+    public void ExcluirMusica(Dal<Artista> artistaDal)
+    {
+        Console.Write("\nDigite a banda cujo a música deseja Alterar: ");
+        string nomeDoArtista = Console.ReadLine()!.ToUpper();
+
+        if (nomeDoArtista == string.Empty) //Se for inserido um valor vazio
+        {
+            Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+            Console.WriteLine("Digite ENTER para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+            Executar(artistaDal);
+        }
+        else
+        {
+            try
+            {
+                //recupera o Artista pelo nome inserido, podendo artista receber null
+                Artista? artista = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).FirstOrDefault();
+
+                //Verifica se existe a banda cadastrada
+                if (artista != null)
+                {
+                    MenuRegistrarAlbum.ListarAlbumporArtista(artista);
+
+                    if (artista.Albuns.Count() > 0) //Se o Artista possui albuns cadastrados para a alteração de musica
+                    {
+                        Console.Write("\nAgora digite o título do álbum: ");
+
+                        string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                        do
+                        {
+                            tituloAlbum = Console.ReadLine()!.ToUpper();
+
+                            if (tituloAlbum == string.Empty)
+                            {
+                                Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                Console.Write("\nAlbum: ");
+                            }
+
+                        } while (tituloAlbum == string.Empty);
+
+
+                        Album? album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum));
+                        if (album != null) // Se existir o album para o cadastro de musicas
+                        {
+
+                            ListarMusicasPorAlbum(album);
+
+                            if (album.Musicas.Count() > 0) //Se o Artista possui musicas cadastradas para a excluir
+                            {
+                                Console.Write("\nEntre com o nome da música: ");
+
+
+                                string tituloMusica = ""; //Impede a entrada de um valor vazio
+                                do
+                                {
+                                    tituloMusica = Console.ReadLine()!.ToUpper();
+
+                                    if (tituloMusica == string.Empty)
+                                    {
+                                        Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                        Console.Write("\nMúsica: ");
+                                    }
+
+                                } while (tituloMusica == string.Empty);
+
+                                Musica? musica = album.Musicas.FirstOrDefault(m => m.Nome.Equals(tituloMusica));
+                                if (musica != null) //Se existir a música no album
+                                {
+                                    
+                                    var contex = new ScreenSoundContext();
+                                    var musicaDal = new Dal<Musica>(contex);
+
+                                    album.Musicas.Remove(musica);
+                                    artistaDal.Alterar(artista);
+
+                                    musicaDal.Deletar(musica);
+                                    Console.WriteLine($"A música {tituloMusica} do álbum {tituloAlbum} foi removida com sucesso");
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine($"\nA Música: {tituloMusica} não foi encontrada em nosso cadastro do álbum {tituloAlbum}\nTente novamente . . .");
+                                }
+                            }
+
+                        }
+                        else // Se NÃO existir o album para altarar musicas
+                        {
+                            Console.WriteLine($"\nO Álbum: {tituloAlbum} não foi encontrado em nossos cadastros\nTente novamente . . .");
+                        }
+                    }
+
+                }
+                else
+                {
+                    Console.WriteLine($"\nA banda {nomeDoArtista} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                }
+
+                Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+                Console.ReadKey();
+                Console.Clear();
+                Executar(artistaDal);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Console.Clear();
+                Executar(artistaDal);
+            }
+        }
+    }
+
+
+
+
 
 
 
