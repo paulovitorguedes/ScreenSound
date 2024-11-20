@@ -1,119 +1,234 @@
-﻿using ScreenSound.Banco;
+﻿using Newtonsoft.Json.Linq;
+using ScreenSound.Banco;
 using ScreenSound.Models;
+using System.ComponentModel;
 
 namespace ScreenSound.Menus;
 
 internal class MenuRegistrarMusica : Menus //Extend a classe Menus como herança
 {
-    ////override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-    //internal override void Executar()
-    //{
-    //    var contex = new ScreenSoundContext();
-    //    var artistaDal = new Dal<Artista>(contex);
-
-    //    //base = Chama primeiramente o método da classe base (PAI) 
-    //    base.Executar();
-    //    ExibirTituloDaOpcao("Registro de músicas");
-    //    Console.Write("Digite a artista cujo música deseja registrar: ");
-    //    string nomeDoArtista = Console.ReadLine()!.ToUpper();
-
-    //    Artista artista = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList()[0];
-    //    //Verifica se existe a Artista cadadtrada
-    //    if (artista is null)
-    //    {
-    //        //Artista artista = bandasRegistradas[nomeDoArtista];
-
-    //        //Verifica se a Artista já possui algum Álbum cadastrado
-    //        if (artista.Albuns.Count != 0)
-    //        {
-    //            Console.WriteLine("\nInforme quais dos álbuns abaixo deseja adicionar uma música:");
-
-    //            // Apresenta o nome de todos os Álbum da Artista selecionada
-    //            int cont = 1;
-    //            foreach (Album a in artista.Albuns)
-    //            {
-    //                Console.WriteLine($"Álbum{cont++}: {a.Nome}");
-    //            }
-
-    //            Console.Write("\n\nÁlbum: ");
-    //            string tituloAlbum = Console.ReadLine()!.ToUpper();
-
-    //            Album album = artista.Albuns.Find(a => a.Nome.Equals(tituloAlbum))!;
-
-    //            if (album != null)
-    //            {
-    //                Console.Write($"\nEntre com o nome da música para o álbum {tituloAlbum}: ");
-    //                string tituloMusica = Console.ReadLine()!.ToUpper();
-
-    //                Console.Write($"\nEntre com a duração da música {tituloMusica} em segundos: ");
-    //                int duracaoMusica = int.Parse(Console.ReadLine()!);
+    //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
+    internal override void Executar(Dal<Artista> artistaDal)
+    {
+        //base = Chama primeiramente o método da classe base (PAI) 
+        base.Executar(artistaDal);
+        ExibirTituloDaOpcao("Registro de músicas");
 
 
-    //                bool boolDisponivel = false;
-    //                int value = 0;
-    //                do
-    //                {
-    //                    Console.Write($"\nInforme se a música {tituloMusica} estára disponível no plano básico ( 1 - SIM / 2 - NÃO ): ");
-    //                    string stringDisponivel = Console.ReadLine()!;
+        Console.WriteLine("\nDigite 1 para Cadastrar");
+        Console.WriteLine("Digite 2 para Alterar");
+        Console.WriteLine("Digite 3 para Excluir");
+        Console.WriteLine("Digite 0 para retornar ao menu principal");
 
-    //                    switch (stringDisponivel)
-    //                    {
-    //                        case "1":
-    //                            boolDisponivel = true;
-    //                            value = 0;
-    //                            break;
-    //                        case "2":
-    //                            boolDisponivel = false;
-    //                            value = 0;
-    //                            break;
-    //                        default:
-    //                            Console.WriteLine("\nOpção Inválida, tente novamente . . .");
-    //                            Thread.Sleep(1000);
-    //                            value = 1;
-    //                            break;
-    //                    }
+        Console.Write("\nDigite a sua opção: ");
+        string opcaoEscolhida = Console.ReadLine()!;
 
-    //                } while (value == 1);
+        int opcaoEscolhidaNumerica;
+        if (int.TryParse(opcaoEscolhida, out opcaoEscolhidaNumerica) && (opcaoEscolhidaNumerica >= 0 && opcaoEscolhidaNumerica <= 3))
+        {
+            switch (opcaoEscolhida)
+            {
+                case "1":
+                    CadastrarMusica(artistaDal);
+                    break;
+                case "2":
+                    //AlterarAlbum(artistaDal);
+                    break;
+                case "3":
+                    //ExcluirAlbum(artistaDal);
+                    break;
+                case "0":
+                    SairMusica();
+                    break;
+            }
+        }
+        else
+        {
+            Console.WriteLine("Opção inválida! Tente novamente.");
+            Console.WriteLine("Digitr ENTER para continuar . . .");
+            Console.ReadLine();
+            Executar(artistaDal);
+        }
+    }
+
+
+
+    public void SairMusica()
+    {
+        Console.Write("\n\nDigite ENTER para voltar ao menu principal ");
+        Console.ReadKey();
+        Console.Clear();
+    }
 
 
 
 
 
-    //                Musica musica = new(artista, tituloMusica)
-    //                {
-    //                    Duracao = duracaoMusica,
-    //                    Disponivel = boolDisponivel
-    //                };
+    public void CadastrarMusica(Dal<Artista> artistaDal)
+    {
+        Console.Write("\nDigite a banda cujo a música deseja registrar: ");
+        string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
-    //                //Adiciona o obj Musica ao álbum cadastrado na lista de álbuns da classe Artista
-    //                foreach (Album a in artista.Albuns)
-    //                {
-    //                    if (a.Nome.Equals(tituloAlbum)) a.AdicionarMusica(musica); break;
+        if (nomeDoArtista == string.Empty) //Se for inserido um valor vazio
+        {
+            Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+            Console.WriteLine("digite ENTER para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+            Executar(artistaDal);
+        }
+        else
+        {
+            try
+            {
+                //List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                Artista? artista = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).FirstOrDefault();
 
-    //                }
+                //Verifica se existe a banda cadastrada
+                if (artista != null)
+                {
+                    MenuRegistrarAlbum.ListarAlbumporArtista(artista);
 
-    //                Console.WriteLine($"\nA música {tituloMusica} de {nomeDoArtista} foi registrado com sucesso no álbum {tituloAlbum}! \nAguarde . . .");
-    //                //Thread.Sleep(2000);
+                    Console.Write("\nAgora digite o título do álbum para registro da música: ");
 
-    //            }
-    //            else
-    //            {
-    //                Console.WriteLine($"O Álbum {tituloAlbum} não foi encontrada em nossos cadastros\nTente novamente . . .");
-    //            }
-    //        }
-    //        else
-    //        {
-    //            Console.WriteLine($"A Artista {nomeDoArtista} não possui Álbuns cadastrados\nTente primeiramente cadastrar um Álbum.");
-    //        }
+                    string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                    do
+                    {
+                        tituloAlbum = Console.ReadLine()!.ToUpper();
 
-    //    }
-    //    else
-    //    {
-    //        Console.WriteLine($"A Artista {nomeDoArtista} não foi encontrada em nossos cadastros\nTente novamente . . .");
-    //    }
+                        if (tituloAlbum == string.Empty)
+                        {
+                            Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                            Console.Write("\nAlbum: ");
+                        }
 
-    //    Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
-    //    Console.ReadKey();
-    //    Console.Clear();
-    //}
+                    } while (tituloAlbum == string.Empty);
+
+
+                    Album? album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum));
+                    if (album != null) // Se existir o album para o cadastro de musicas
+                    {
+                        
+                        ListarMusicasPorAlbum(album);
+                        bool value = false; //Será usado para verificar a opção de novo cadastro de música
+                        do
+                        {
+                            Console.Write("\nEntre com o nome da música: ");
+
+                           
+                            string tituloMusica = ""; //Impede a entrada de um valor vazio para cadastro do album
+                            do
+                            {
+                                tituloMusica = Console.ReadLine()!.ToUpper();
+
+                                if (tituloMusica == string.Empty)
+                                {
+                                    Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                    Console.Write("\nMúsica: ");
+                                }
+
+                            } while (tituloMusica == string.Empty);
+
+                            if (album.Musicas.Select(m => m.Nome.Equals(tituloMusica)).FirstOrDefault())
+                            {
+                                Console.WriteLine($"\nA Música: {tituloMusica} já encontra-se em nosso cadastro do álbum {tituloAlbum}\nTente novamente . . .");
+                            }
+                            else
+                            {
+                                Console.Write("Duração da música: ");
+                                int duracao = 0;
+                                while (!(int.TryParse(Console.ReadLine(), out duracao))) //ficará no loop caso o valor inserido não for inteiro
+                                {
+                                    Console.WriteLine("\nOpção inválida, tente novamente . . .");
+                                    Console.Write("Duração da música: ");
+                                }
+
+
+                                Console.Write("Ano de lançamento: ");
+                                int anoLancamento = 0;
+                                while (!(int.TryParse(Console.ReadLine(), out anoLancamento))) //ficará no loop caso o valor inserido não for inteiro
+                                {
+                                    Console.WriteLine("\nOpção inválida, tente novamente . . .");
+                                    Console.Write("Ano de lançamento: ");
+                                }
+
+                                Musica musica = new(tituloMusica)
+                                {
+                                    Duracao = duracao,
+                                    Disponivel = true,
+                                    AnoLancamento = anoLancamento
+                                };
+
+                                album.Musicas.Add(musica);
+                                artistaDal.Alterar(artista);
+                                Console.WriteLine($"\nA música {tituloMusica} foi registrada com sucesso!\nAguarde . . .");
+
+                                Console.WriteLine($"Deseja registrar uma nova música no álbum {tituloAlbum} ?");
+                                Console.Write("Digite 1 (sim) ou 2 (não)");
+                                string option = Console.ReadLine();
+                                
+                                switch (option)
+                                {
+                                    case "1":
+                                        value = true;
+                                        break;
+                                    case "2":
+                                        value = false;
+                                        break;
+                                    default:
+                                        Console.WriteLine("Opção inválida !");
+                                        value = false;
+                                        Console.ReadLine();
+
+                                        break;
+                                }
+                            }
+
+                        } while (value);
+
+                        
+                    }
+                    else // Se NÃO existir o album para o cadastro de musicas
+                    {
+                        Console.WriteLine($"\nO Álbum: {tituloAlbum} não foi encontrado em nossos cadastros\nTente novamente . . .");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"\nA banda {nomeDoArtista} não foi encontrada em nossos cadastros\nTente novamente . . .");
+                }
+
+                Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+                Console.ReadKey();
+                Console.Clear();
+                Executar(artistaDal);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Console.Clear();
+                Executar(artistaDal);
+            }
+        }
+
+    }
+
+
+
+    public static void ListarMusicasPorAlbum(Album album)
+    {
+
+        int count = 0;
+        if (album.Musicas.Count() > 0)
+        {
+            Console.WriteLine($"\nLISTA DE MÚSICAS Do ÁLBUM {album.Nome}:");
+            foreach (Musica m in album.Musicas)
+            {
+                Console.WriteLine($"{++count}) {m.Nome}");
+            }
+        }
+        else Console.WriteLine($"\nO ÁLBUM {album.Nome} AINDA NÃO POSSUI MÚSICAS CADASTRADAS !");
+    }
 }

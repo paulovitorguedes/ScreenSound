@@ -1,6 +1,5 @@
 ﻿using ScreenSound.Banco;
 using ScreenSound.Models;
-using System.Linq;
 
 namespace ScreenSound.Menus;
 
@@ -37,7 +36,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                     ExcluirAlbum(artistaDal);
                     break;
                 case "0":
-                    SairAlbum(artistaDal);
+                    SairAlbum();
                     break;
             }
         }
@@ -54,12 +53,11 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
 
 
 
-    public void SairAlbum(Dal<Artista> artistaDal)
+    public void SairAlbum()
     {
         Console.Write("\n\nDigite ENTER para voltar ao menu principal ");
         Console.ReadKey();
         Console.Clear();
-        return;
     }
 
 
@@ -103,7 +101,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                         if (tituloAlbum == string.Empty)
                         {
                             Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
-                            Console.WriteLine("\nAlbum: ");
+                            Console.Write("\nAlbum: ");
                         }
 
                     } while (tituloAlbum == string.Empty);
@@ -185,7 +183,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                             if (tituloAlbum == string.Empty)
                             {
                                 Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
-                                Console.WriteLine("\nAlbum: ");
+                                Console.Write("\nAlbum: ");
                             }
 
                         } while (tituloAlbum == string.Empty);
@@ -205,7 +203,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                                 if (novoTituloAlbum == string.Empty)
                                 {
                                     Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
-                                    Console.WriteLine("\nAlbum: ");
+                                    Console.Write("\nAlbum: ");
                                 }
 
                             } while (novoTituloAlbum == string.Empty);
@@ -285,7 +283,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
                         if (tituloAlbum == string.Empty)
                         {
                             Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
-                            Console.WriteLine("\nAlbum: ");
+                            Console.Write("\nAlbum: ");
                         }
 
                     } while (tituloAlbum == string.Empty);
@@ -335,7 +333,7 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
 
 
 
-    public void ListarAlbumporArtista(Artista artista)
+    public static void ListarAlbumporArtista(Artista artista)
     {
 
         int count = 0;
@@ -344,9 +342,10 @@ internal class MenuRegistrarAlbum : Menus //Extend a classe Menus como herança
             Console.WriteLine($"\nLISTA DE ALBUM DE {artista.Nome}:");
             foreach (Album a in artista.Albuns)
             {
-                Console.WriteLine($"{++count}) {a}");
+                Console.WriteLine($"{++count}) {a.ToString()}");
             }
         }
-        Console.WriteLine($"\nO ARTISTA {artista.Nome} AINDA NÃO POSSUI ÁLBUNS CADASTRADOS !");
+        else Console.WriteLine($"\nO ARTISTA {artista.Nome} AINDA NÃO POSSUI ÁLBUNS CADASTRADOS !");
+
     }
 }
