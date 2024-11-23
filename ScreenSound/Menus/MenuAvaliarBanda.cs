@@ -5,38 +5,79 @@ namespace ScreenSound.Menus;
 
 internal class MenuAvaliarBanda : Menus  //Extend a classe Menus como herança
 {
-    ////override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
-    //internal override void Executar()
-    //{
+    //override = cria a sobrecarga do método Executar que encontra-se na classe Pai Menus (Polimofirmo) 
+    internal override void Executar(Dal<Artista> artistaDal)
+    {
+        //base = Chama primeiramente o método da classe base (PAI) 
+        base.Executar(artistaDal);
+        ExibirTituloDaOpcao("Avaliar Artistas");
 
-    //    var contex = new ScreenSoundContext();
-    //    var astistaDal = new Dal<Artista>(contex);
 
-    //    //base = Chama primeiramente o método da classe base (PAI) 
-    //    base.Executar();
-    //    ExibirTituloDaOpcao("Avaliar artistas");
-    //    Console.Write("Digite o nome da artistas que deseja avaliar: ");
-    //    string nomeDoArtista = Console.ReadLine()!.ToUpper();
+        Console.Write("Digite o nome da banda que deseja avaliar: ");
+        string nomeDoArtista = Console.ReadLine()!.ToUpper();
 
-    //    Artista artistas = astistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList()[0];
-    //    if (artistas == null)
-    //    {
-    //        Console.WriteLine($"\nA artistas {nomeDoArtista} não foi encontrada!");
+        if (nomeDoArtista == string.Empty) //Se for inserido um valor vazio
+        {
+            Console.WriteLine("O nome da banda é obrigatório!\nTente novamente.");
+            Console.WriteLine("digite ENTER para continuar...");
+            Console.ReadLine();
+            Console.Clear();
+            Executar(artistaDal);
+        }
+        else 
+        {
+            try
+            {
+                //Verifica se existe a Artista cadadtrada
+                //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
+                //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
+                {
+                    Console.Write($"Entre com a nota entre 0 e 10 para a banda {nomeDoArtista}: ");
+                    int notaIndicada;
 
-    //    }
-    //    else
-    //    {
-    //        Console.Write($"Qual a nota que a artistas {nomeDoArtista} merece: ");
-    //        //Avaliacao.Parce é um método static na class Avaliacao transformando a string em int e após criando o obj Avaliação
-    //        Avaliacao avaliacao = Avaliacao.Parse(Console.ReadLine()!);
+                    if (int.TryParse(Console.ReadLine(), out notaIndicada)) //Se o valor da nota indicado for um inteiro
+                    {
+                        if (notaIndicada >= 0 && notaIndicada <= 10) // Se o valor da nota indicado estiver dentro do range esperado 1 à 10
+                        {
+                            Console.WriteLine("Cadastrar Nota");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Entre somente com os valores de 0 à 10");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Entre com um valor válido para avaliar");
+                    }
 
-    //        artistas.AdicionarNota(avaliacao);
-    //        Console.WriteLine($"\nA nota {avaliacao.Nota} foi registrada com sucesso para a artistas {nomeDoArtista}");
-    //        //Thread.Sleep(2000);
-    //    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Falha apresentada: {ex.Message}");
+                Console.Write("\n\nDigite ENTER para continuar ");
+                Console.ReadKey();
+                Executar(artistaDal);
+            }
+        }
+        Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
+        Console.ReadKey();
+        Console.Clear();
+    }
 
-    //    Console.Write("\n\nDigite uma tecla para voltar ao menu principal ");
-    //    Console.ReadKey();
-    //    Console.Clear();
-    //}
+
+
+
+
+
+
+    public void SairBanda()
+    {
+        Console.Write("\n\nDigite ENTER para voltar ao menu principal ");
+        Console.ReadKey();
+        Console.Clear();
+    }
 }
