@@ -42,6 +42,12 @@ internal class MenuAvaliarBanda : Menus  //Extend a classe Menus como herança
                         if (notaIndicada >= 0 && notaIndicada <= 10) // Se o valor da nota indicado estiver dentro do range esperado 1 à 10
                         {
                             Console.WriteLine("Cadastrar Nota");
+                            Artista artista = artistas.FirstOrDefault(a => a.Nome.Equals(nomeDoArtista))!;
+                            AvaliacaoArtista avaliacaoArtista = new(notaIndicada);
+                            artista.AdicionarNota(avaliacaoArtista);
+
+                            artistaDal.Alterar(artista);
+                            Console.WriteLine($"Avaliação cadastrada com sucesso para o Banda {nomeDoArtista}");
                         }
                         else
                         {
