@@ -73,17 +73,4 @@ internal class MenuAvaliarBanda : Menus  //Extend a classe Menus como herança
         Console.ReadKey();
         Console.Clear();
     }
-
-
-
-
-
-
-
-    public void SairBanda()
-    {
-        Console.Write("\n\nDigite ENTER para voltar ao menu principal ");
-        Console.ReadKey();
-        Console.Clear();
-    }
 }
