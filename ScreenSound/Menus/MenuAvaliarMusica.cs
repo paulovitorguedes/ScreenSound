@@ -92,7 +92,10 @@ internal class MenuAvaliarMusica : Menus
                                         if (nota >= 1 && nota <= 5)
                                         {
                                             //cadastra no banco
-                                            Console.WriteLine($"Nota {nota} cadastrada");
+                                            AvaliacaoMusica avaliacaoMusica = new(nota);
+                                            musica.AdicionarNota(avaliacaoMusica);
+                                            artistaDal.Alterar(artista);
+                                            Console.WriteLine($"Nota {nota} cadastrada para música {tituloMusica}");
                                             value = false;
                                         }
                                         else
