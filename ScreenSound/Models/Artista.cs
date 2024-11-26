@@ -43,6 +43,11 @@ public class Artista
         return value;
     }
 
+    public IEnumerable<string> NomesAlbuns()
+    {
+        return Albuns.Select(a => a.Nome).ToList();
+    }
+
 
     public override string ToString()
     {

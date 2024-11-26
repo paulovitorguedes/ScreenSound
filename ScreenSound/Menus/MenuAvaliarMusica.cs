@@ -36,24 +36,40 @@ internal class MenuAvaliarMusica : Menus
                     if (artista.Albuns.Count() > 0)
                     {
                         Console.WriteLine(artista.ExibirDiscografia());
+
+                        string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
+                        do
+                        {
+                            tituloAlbum = Console.ReadLine()!.ToUpper();
+
+                            if (tituloAlbum == string.Empty)
+                            {
+                                Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                Console.Write("\nAlbum: ");
+                            }
+
+                        } while (tituloAlbum == string.Empty);
+
+
+                        //verifica se existe o Album cadastrado
+                        if (artista.NomesAlbuns().Contains(tituloAlbum))
+                        {
+                            //Se a album exist - exibe as musicas
+
+                            //solicita escolha da musica
+
+                            //solicita entrada da nota
+
+                            //cadastra no banco
+                        }
+                        else Console.WriteLine("O álbum inserido não encontra-se em nosso cadastro");
+
                     }
-                    else Console.WriteLine("A Banda inserida não possui musica cadastrada");
+                    else Console.WriteLine("A banda inserida não possui musica cadastrada");
                     
                 }
                 else Console.WriteLine("A Banda inserida não encontra-se em nosso cadastro");
-
-
-                //solicita escolha do album
-
-                //verifica se existe o Album cadastrado
-
-                //Se a album exist - exibe as musicas
-
-                //solicita escolha da musica
-
-                //solicita entrada da nota
-
-                //cadastra no banco
+             
             }
             catch (Exception ex)
             {
