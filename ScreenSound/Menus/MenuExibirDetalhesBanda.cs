@@ -41,7 +41,19 @@ internal class MenuExibirDetalhesBanda : Menus //Extend a classe Menus como hera
                     //Apresenta a média das notas da banda
                     List<int> notas = artista.BuscarNotas().ToList();
                     if (notas.Count > 0) Console.WriteLine($"Média: {notas.Average()}");
-                    else Console.WriteLine("Banda ainda sem avaliações !");
+                    else Console.WriteLine("Banda ainda sem avaliação !");
+
+                    //Apresenta os Albuns e Duração total de cada álbum
+                    List<Album> albuns = artista.Albuns.ToList();
+                    if(albuns.Count > 0)
+                    {
+                        foreach (Album al in albuns)
+                        {
+                            Console.WriteLine($"\nÁlbum: {al.Nome} - Total: {al.DuracaoAlbum()} segundos");
+                        }
+                    }
+                    else Console.WriteLine("Banda ainda sem álbum cadastrado! ");
+                    
                 }
                 else
                 {

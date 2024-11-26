@@ -59,4 +59,18 @@ public class Album
     {
         return AvaliacoesAlbum.Select(n => n.Nota).ToList();
     }
+
+
+    public int DuracaoAlbum()
+    {
+        int duracao = 0;
+        if (Musicas.Count > 0)
+        {
+            foreach (Musica m in Musicas)
+            {
+                duracao += m.Duracao;
+            }
+        }
+        return duracao;
+    }
 }
