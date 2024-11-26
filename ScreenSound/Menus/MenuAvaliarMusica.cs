@@ -37,6 +37,7 @@ internal class MenuAvaliarMusica : Menus
                     {
                         Console.WriteLine(artista.ExibirDiscografia());
 
+                        Console.Write("\nDigite o título do álbum: ");
                         string tituloAlbum = ""; //Impede a entrada de um valor vazio para cadastro do album
                         do
                         {
@@ -54,12 +55,15 @@ internal class MenuAvaliarMusica : Menus
                         //verifica se existe o Album cadastrado
                         if (artista.NomesAlbuns().Contains(tituloAlbum))
                         {
-                            //Se a album exist - exibe as musicas
+                            //exibe as musicas do álbum
+                            Album album = artista.Albuns.FirstOrDefault(a => a.Nome.Equals(tituloAlbum))!;
+                            Console.WriteLine(album.ExibirMusicasDoAlbum());
 
+
+
+                            
                             //solicita escolha da musica
-
                             //solicita entrada da nota
-
                             //cadastra no banco
                         }
                         else Console.WriteLine("O álbum inserido não encontra-se em nosso cadastro");
