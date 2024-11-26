@@ -60,11 +60,31 @@ internal class MenuAvaliarMusica : Menus
                             Console.WriteLine(album.ExibirMusicasDoAlbum());
 
 
-
-                            
                             //solicita escolha da musica
-                            //solicita entrada da nota
-                            //cadastra no banco
+                            Console.Write("\nEntre com a música que deseja avaliar: ");
+                            string tituloMusica = ""; //Impede a entrada de um valor vazio para cadastro do album
+                            do
+                            {
+                                tituloMusica = Console.ReadLine()!.ToUpper();
+
+                                if (tituloMusica == string.Empty)
+                                {
+                                    Console.WriteLine("\nValor inserido é inválido\nTente Novamente");
+                                    Console.Write("\nMúsica: ");
+                                }
+
+                            } while (tituloMusica == string.Empty);
+
+
+
+                            Musica? musica = album.Musicas.FirstOrDefault(m => m.Nome.Equals(tituloMusica));
+                            if (musica != null)
+                            {
+                                //solicita entrada da nota
+                                //cadastra no banco
+                            }
+                            else Console.WriteLine("A música inserida não encontra-se em nosso cadastro");
+                            
                         }
                         else Console.WriteLine("O álbum inserido não encontra-se em nosso cadastro");
 
