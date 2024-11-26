@@ -1,6 +1,7 @@
 ﻿using ScreenSound.Banco;
 using ScreenSound.Menus;
 using ScreenSound.Models;
+using System.Numerics;
 
 internal class MenuAvaliarMusica : Menus
 {
@@ -81,19 +82,47 @@ internal class MenuAvaliarMusica : Menus
                             if (musica != null)
                             {
                                 //solicita entrada da nota
-                                //cadastra no banco
+                                Console.Write("Entre com uma nota entre 1 à 5: ");
+                                int nota;
+                                bool value = true;
+                                do
+                                {
+                                    if (int.TryParse(Console.ReadLine(), out nota))
+                                    {
+                                        if (nota >= 1 && nota <= 5)
+                                        {
+                                            //cadastra no banco
+                                            Console.WriteLine($"Nota {nota} cadastrada");
+                                            value = false;
+                                        }
+                                        else
+                                        {
+                                            Console.WriteLine("Somente valores entre 1 à 5");
+                                            Console.Write("Nota: ");
+                                            value = true;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Valor inválido para nota!");
+                                        Console.WriteLine("Somente valores entre 1 à 5");
+                                        Console.Write("Nota: ");
+                                        value = true;
+                                    }
+
+                                } while (value);
                             }
                             else Console.WriteLine("A música inserida não encontra-se em nosso cadastro");
-                            
+
                         }
                         else Console.WriteLine("O álbum inserido não encontra-se em nosso cadastro");
 
                     }
                     else Console.WriteLine("A banda inserida não possui musica cadastrada");
-                    
+
                 }
                 else Console.WriteLine("A Banda inserida não encontra-se em nosso cadastro");
-             
+
             }
             catch (Exception ex)
             {
