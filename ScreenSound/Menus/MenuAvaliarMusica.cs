@@ -27,7 +27,15 @@ internal class MenuAvaliarMusica : Menus
         {
             try
             {
-                //verifica se existe a banda cadastrada
+                //Verifica se existe a Artista cadadtrada
+                //Busca uma lista de artistas com o nome estipulado em nomeDoArtista
+                //A lista será vazia caso não encontre algum cadastro de artista com o nome citado
+                List<Artista> artistas = artistaDal.ListarPor(a => a.Nome.Equals(nomeDoArtista)).ToList();
+                if (artistas.Count > 0)
+                {
+
+                }
+                else Console.WriteLine("A Banda inserida não encontra-se em nosso cadastro");
 
                 //Se a banda exist - exibe os albuns
 
