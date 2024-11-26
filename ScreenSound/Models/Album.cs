@@ -33,7 +33,13 @@ public class Album
         {
             foreach (Musica m in Musicas)
             {
-                value += $"Música{count++}: {m.Nome}";
+                List<int> notas = m.BuscarNotas().ToList();
+                double media = 0;
+                string star = "*";
+                if (notas.Count > 0) media = notas.Average();
+                if (media != 0) star = string.Empty.PadLeft(Convert.ToInt32(media), '*');
+
+                value += $"Música{count++}: {m.Nome} ( {star} )\n";
             }
         }
 
