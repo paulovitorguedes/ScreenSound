@@ -37,6 +37,11 @@ internal class MenuExibirDetalhesBanda : Menus //Extend a classe Menus como hera
                     Artista artista = artistas.FirstOrDefault(a => a.Nome.Equals(nomeDoArtista))!;
                     Console.WriteLine($"\n\n########## - {artista.Nome} - ##########");
                     Console.WriteLine($"\n{artista.Bio}");
+
+                    //Apresenta a média das notas da banda
+                    List<int> notas = artista.BuscarNotas().ToList();
+                    if (notas.Count > 0) Console.WriteLine($"Média: {notas.Average()}");
+                    else Console.WriteLine("Banda ainda sem avaliações !");
                 }
                 else
                 {
