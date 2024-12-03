@@ -9,7 +9,7 @@ namespace ScreenSound.Banco;
 //Existem outras convenções que vão ser utilizadas de acordo com a necessidade e complexidade da aplicação que está sendo desenvolvida.Para saber mais sobre este tema
 //https://learn.microsoft.com/pt-br/ef/ef6/modeling/code-first/fluent/types-and-properties
 
-internal class ScreenSoundContext : DbContext
+public class ScreenSoundContext : DbContext
 {
     public DbSet<Artista> Artistas { get; set; } //Artistas precisa ser o mesmo nome da tabela do banco de dados
     public DbSet<Album> Albuns { get; set; }

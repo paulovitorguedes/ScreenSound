@@ -1,6 +1,7 @@
 ﻿using ScreenSound.Banco;
 using ScreenSound.Menus;
 using ScreenSound.Models;
+using System.Reflection;
 
 
 
@@ -90,7 +91,42 @@ internal partial class Program
     private static void Main(string[] args)
     {
 
-        var contex = new ScreenSoundContext();
+        // Obtém o assembly atual
+        Assembly assembly = Assembly.GetExecutingAssembly();
+
+        // Obtém o nome do assembly
+        string assemblyName = assembly.GetName().Name;
+        Console.WriteLine($"Nome do Assembly: {assemblyName}");
+
+        // Obtém a versão do assembly
+        Version version = assembly.GetName().Version;
+        Console.WriteLine($"Versão do Assembly: {version}");
+
+        // Obtém informações sobre o arquivo do assembly
+        string location = assembly.Location;
+        Console.WriteLine($"Localização do Assembly: {location}");
+
+        // Obtém atributos do assembly
+        object[] attributes = assembly.GetCustomAttributes(false);
+        foreach (var attribute in attributes)
+        {
+            Console.WriteLine($"Atributo: {attribute.GetType().Name}");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    var contex = new ScreenSoundContext();
         var artistadal = new Dal<Artista>(contex);
         Dictionary<string, Artista> bandasRegistradas = []; //Dicionary para a criação do Menu
 

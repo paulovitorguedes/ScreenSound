@@ -22,7 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <ProjectReference Include="..\ScreenSound.Shared.Data\ScreenSound.Shared.Data.csproj" />
+    <ProjectReference Include="..\ScreenSound.Shared.Models\ScreenSound.Shared.Models.csproj" />
   </ItemGroup>
 
 </Project>
