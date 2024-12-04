@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ScreenSound.Api.Request;
 using ScreenSound.Banco;
 using ScreenSound.Models;
 
 namespace ScreenSound.Api.Controllers;
 
-public  static class ArtistasExtensions
+public static class ArtistasExtensions
 {
     public static void EndpointArtistas(this WebApplication app)
     {
@@ -32,12 +33,17 @@ public  static class ArtistasExtensions
         //Adiciona Novos Artistas
         app.MapPost("/Artistas", ([FromServices] Dal<Artista> dal, [FromBody] ArtistaPostRequest artistaRequest) =>
         {
-            Artista artista = new(artistaRequest.nome.ToUpper(), artistaRequest.bio.ToUpper());
-            artista.FotoPerfil = artistaRequest.fotoPerfil;
-            dal.Adicionar(artista);
-            return Results.Ok();
+            Artista? artista = dal.ListarPor(a => a.Nome.Equals(artistaRequest.nome)).FirstOrDefault();
+            if (artista is null)
+            {
+                Artista artistaNovo = new(artistaRequest.nome.ToUpper(), artistaRequest.bio.ToUpper());
+                artistaNovo.FotoPerfil = artistaRequest.fotoPerfil;
+                dal.Adicionar(artistaNovo);
+                return Results.Ok();
+            }
+            else return Results.Conflict("Conflict name.");
         });
-
+        
 
 
         //Apaga Artista por ID
@@ -47,8 +53,16 @@ public  static class ArtistasExtensions
             if (artista is null) return Results.NotFound();
             else
             {
-                dal.Deletar(artista);
-                return Results.NoContent();
+                try
+                {
+                    dal.Deletar(artista);
+                    return Results.NoContent();
+                }
+                catch (DbUpdateException)
+                {
+                    return Results.StatusCode(500); // Retorna 500 Internal Server Error
+                }
+                
             }
 
         });
@@ -57,18 +71,24 @@ public  static class ArtistasExtensions
         //Altera Artistas
         app.MapPut("/Artistas/{id}", ([FromServices] Dal<Artista> dal, [FromBody] ArtistaPostRequest artistaRequest, int id) =>
         {
-            Artista artista = new(artistaRequest.nome.ToUpper(), artistaRequest.bio.ToUpper());
-            artista.FotoPerfil = artistaRequest.fotoPerfil;
             var artistaParaAtualizar = dal.ListarPor(a => a.Id == id).FirstOrDefault();
 
             if (artistaParaAtualizar is null) return Results.NotFound();
             else
             {
-                artistaParaAtualizar.Nome = artista.Nome;
-                artistaParaAtualizar.Bio = artista.Bio;
-                artistaParaAtualizar.FotoPerfil = artista.FotoPerfil;
-                dal.Alterar(artistaParaAtualizar);
-                return Results.Ok();
+                artistaParaAtualizar.Nome = artistaRequest.nome.ToUpper();
+                artistaParaAtualizar.Bio = artistaRequest.bio.ToUpper();
+                artistaParaAtualizar.FotoPerfil = artistaRequest.fotoPerfil;
+                try
+                {
+                    dal.Alterar(artistaParaAtualizar);
+                    return Results.Ok();
+                }
+                catch (DbUpdateException)
+                {
+                    return Results.StatusCode(500); // Retorna 500 Internal Server Error
+                }
+                
             }
 
         });
