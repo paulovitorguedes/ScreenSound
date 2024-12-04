@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Castle.Components.DictionaryAdapter;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScreenSound.Api.Request;
+using ScreenSound.Api.Response;
 using ScreenSound.Shared.Data.Banco;
 using ScreenSound.Shared.Models.Models;
 
@@ -16,12 +18,19 @@ public static class ArtistasExtensions
         //Retorna todos os artistas
         app.MapGet("/Artistas/", ([FromServices] Dal<Artista> dal) =>
         {
-            return dal.Listar();
+            List<Artista> astistas = dal.Listar().ToList();
+            List<ArtistaResponse> artistaResponses = new();
+            foreach (Artista artista in astistas)
+            {
+                ArtistaResponse ar = new(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil);
+                artistaResponses.Add(ar);
+            }
+            return artistaResponses;
         });
 
 
         //Retorna Artistas pelo Nome
-        app.MapGet("/Artistas/{nome}", ([FromServices] Dal<Artista> dal, string nome) =>
+        app.MapGet("/Artistas/{Nome}", ([FromServices] Dal<Artista> dal, string nome) =>
         {
             var artista = dal.ListarPor(a => a.Nome.ToUpper().Equals(nome.ToUpper()));
             if (artista is null) return Results.NotFound();
@@ -31,13 +40,13 @@ public static class ArtistasExtensions
 
 
         //Adiciona Novos Artistas
-        app.MapPost("/Artistas", ([FromServices] Dal<Artista> dal, [FromBody] ArtistaPostRequest artistaRequest) =>
+        app.MapPost("/Artistas", ([FromServices] Dal<Artista> dal, [FromBody] ArtistaRequest artistaRequest) =>
         {
-            Artista? artista = dal.ListarPor(a => a.Nome.Equals(artistaRequest.nome)).FirstOrDefault();
+            Artista? artista = dal.ListarPor(a => a.Nome.Equals(artistaRequest.Nome)).FirstOrDefault();
             if (artista is null)
             {
-                Artista artistaNovo = new(artistaRequest.nome.ToUpper(), artistaRequest.bio.ToUpper());
-                artistaNovo.FotoPerfil = artistaRequest.fotoPerfil;
+                Artista artistaNovo = new(artistaRequest.Nome.ToUpper(), artistaRequest.Bio.ToUpper());
+                artistaNovo.FotoPerfil = artistaRequest.FotoPerfil;
                 dal.Adicionar(artistaNovo);
                 return Results.Ok();
             }
@@ -69,16 +78,16 @@ public static class ArtistasExtensions
 
 
         //Altera Artistas
-        app.MapPut("/Artistas/{id}", ([FromServices] Dal<Artista> dal, [FromBody] ArtistaPostRequest artistaRequest, int id) =>
+        app.MapPut("/Artistas/{id}", ([FromServices] Dal<Artista> dal, [FromBody] ArtistaRequest artistaRequest, int id) =>
         {
             var artistaParaAtualizar = dal.ListarPor(a => a.Id == id).FirstOrDefault();
 
             if (artistaParaAtualizar is null) return Results.NotFound();
             else
             {
-                artistaParaAtualizar.Nome = artistaRequest.nome.ToUpper();
-                artistaParaAtualizar.Bio = artistaRequest.bio.ToUpper();
-                artistaParaAtualizar.FotoPerfil = artistaRequest.fotoPerfil;
+                artistaParaAtualizar.Nome = artistaRequest.Nome.ToUpper();
+                artistaParaAtualizar.Bio = artistaRequest.Bio.ToUpper();
+                artistaParaAtualizar.FotoPerfil = artistaRequest.FotoPerfil;
                 try
                 {
                     dal.Alterar(artistaParaAtualizar);

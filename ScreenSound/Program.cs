@@ -90,7 +90,9 @@ internal partial class Program
 {
     private static void Main(string[] args)
     {
-
+        #region Atributos Assembly
+        /* 
+         * 
         // Obtém o assembly atual
         Assembly assembly = Assembly.GetExecutingAssembly();
 
@@ -113,17 +115,8 @@ internal partial class Program
             Console.WriteLine($"Atributo: {attribute.GetType().Name}");
         }
 
-
-
-
-
-
-
-
-
-
-       
-
+        */
+        #endregion
 
 
         var contex = new ScreenSoundContext();
