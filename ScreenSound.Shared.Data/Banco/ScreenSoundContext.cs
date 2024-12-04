@@ -32,6 +32,15 @@ public class ScreenSoundContext : DbContext
                  .UseSqlServer(connectionString)
                  .UseLazyLoadingProxies();
     }
+
+
+    // linha do modelo já fez o relacionamento, mas ainda precisamos explicitar para o Entity Framework que existe esse relacionamento. Portanto, no arquivo ScreenSoundContext.cs, vamos explicitar para o EF Core que existe um relacionamento entre gênero e música, e que uma música pode ter muitos gêneros, assim como um gênero pode ter muitas músicas associadas.
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Musica>()
+        .HasMany(c => c.Generos)
+        .WithMany(c => c.Musicas);
+    }
 }
 
 

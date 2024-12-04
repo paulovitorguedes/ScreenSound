@@ -4,8 +4,9 @@ namespace ScreenSound.Shared.Models.Models;
 
 public class Musica
 {
-    public virtual ICollection<AvaliacaoMusica> AvaliacoesMusica { get; set; } = new List<AvaliacaoMusica>()
-        ;
+    public virtual ICollection<AvaliacaoMusica> AvaliacoesMusica { get; set; } = new List<AvaliacaoMusica>();
+    
+
     public Musica(string nome)
     {
         Nome = nome;
@@ -17,7 +18,7 @@ public class Musica
     public bool Disponivel { get; set; }
     public int? AnoLancamento { get; set; }
     public virtual Album? Album { get; set; }
-
+    public virtual ICollection<Genero> Generos { get; set; }
 
     public override string ToString()
     {
