@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ScreenSound.Models;
+using ScreenSound.Shared.Models.Models;
 
-namespace ScreenSound.Banco;
+namespace ScreenSound.Shared.Data.Banco;
 
 //O Entity Framework segue alguns padrões chamados de convenção para conseguir identificar corretamente os objetos, tabelas e informações que estamos passando através dele. No vídeo anterior conhecemos algumas dessas convenções:
 //Chave primária identificada como Id;
@@ -17,6 +17,8 @@ public class ScreenSoundContext : DbContext
     public DbSet<AvaliacaoAlbum> AvaliacoesAlbum { get; set; }
     public DbSet<AvaliacaoArtista> AvaliacoesArtista { get; set; }
     public DbSet<AvaliacaoMusica> AvaliacoesMusica { get; set; }
+    public DbSet<Genero> Generos { get; set; }
+
 
 
     private string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ScreenSound;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";

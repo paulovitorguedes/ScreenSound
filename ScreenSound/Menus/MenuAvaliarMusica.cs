@@ -1,7 +1,6 @@
-﻿using ScreenSound.Banco;
-using ScreenSound.Menus;
-using ScreenSound.Models;
-using System.Numerics;
+﻿using ScreenSound.Menus;
+using ScreenSound.Shared.Data.Banco;
+using ScreenSound.Shared.Models.Models;
 
 internal class MenuAvaliarMusica : Menus
 {

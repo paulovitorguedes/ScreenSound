@@ -1,7 +1,4 @@
-﻿using Microsoft.IdentityModel.Tokens;
-using ScreenSound.Banco;
-using ScreenSound.Menus;
-using ScreenSound.Models;
+﻿using ScreenSound.Menus;
 
 internal class MenuExibirDetalhesAlbum : Menus
 {

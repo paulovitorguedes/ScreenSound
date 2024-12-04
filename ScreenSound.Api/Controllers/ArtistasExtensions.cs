@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScreenSound.Api.Request;
-using ScreenSound.Banco;
-using ScreenSound.Models;
+using ScreenSound.Shared.Data.Banco;
+using ScreenSound.Shared.Models.Models;
 
 namespace ScreenSound.Api.Controllers;
 

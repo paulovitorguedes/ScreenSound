@@ -1,6 +1,6 @@
-﻿using ScreenSound.Banco;
-using ScreenSound.Menus;
-using ScreenSound.Models;
+﻿using ScreenSound.Menus;
+using ScreenSound.Shared.Data.Banco;
+using ScreenSound.Shared.Models.Models;
 using System.Reflection;
 
 
@@ -126,7 +126,7 @@ internal partial class Program
 
 
 
-    var contex = new ScreenSoundContext();
+        var contex = new ScreenSoundContext();
         var artistadal = new Dal<Artista>(contex);
         Dictionary<string, Artista> bandasRegistradas = []; //Dicionary para a criação do Menu
 

@@ -1,7 +1,4 @@
-﻿using ScreenSound.Banco;
-using ScreenSound.Models;
-
-namespace ScreenSound.Menus;
+﻿namespace ScreenSound.Menus;
 
 internal class MenuAvaliarAlbum : Menus
 {

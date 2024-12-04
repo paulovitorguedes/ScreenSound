@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ScreenSound.Models;
+namespace ScreenSound.Shared.Models.Models;
 
 public class Artista
 {
@@ -28,7 +28,7 @@ public class Artista
 
 
     public string ExibirDiscografia()
-    {      
+    {
         string value = "";
         int count = 1;
 

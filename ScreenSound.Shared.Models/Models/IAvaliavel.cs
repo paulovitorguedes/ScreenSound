@@ -1,4 +1,6 @@
-﻿namespace ScreenSound.Models
+﻿using ScreenSound.Shared.Models.Models;
+
+namespace ScreenSound.Models
 {
     public interface IAvaliavel
     {

@@ -1,4 +1,4 @@
-﻿namespace ScreenSound.Models;
+﻿namespace ScreenSound.Shared.Models.Models;
 
 public class AvaliacaoAlbum
 {

@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace ScreenSound.Models;
+namespace ScreenSound.Shared.Models.Models;
 
 public class Musica
 {

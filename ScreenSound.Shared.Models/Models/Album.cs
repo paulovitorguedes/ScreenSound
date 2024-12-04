@@ -1,4 +1,4 @@
-﻿namespace ScreenSound.Models;
+﻿namespace ScreenSound.Shared.Models.Models;
 
 public class Album
 {
@@ -46,7 +46,7 @@ public class Album
         return value;
     }
 
-  
+
     public override string ToString()
     {
         return @$"ID: {Id}, Álbum: {Nome}.";

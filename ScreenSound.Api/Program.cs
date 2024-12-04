@@ -1,6 +1,6 @@
 using ScreenSound.Api.Controllers;
-using ScreenSound.Banco;
-using ScreenSound.Models;
+using ScreenSound.Shared.Data.Banco;
+using ScreenSound.Shared.Models.Models;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
