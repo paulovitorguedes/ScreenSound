@@ -1,5 +1,4 @@
-﻿using Castle.Components.DictionaryAdapter;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScreenSound.Api.Request;
 using ScreenSound.Api.Response;

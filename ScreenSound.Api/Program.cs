@@ -48,5 +48,6 @@ app.MapControllers();
 
 //Controllers
 app.EndpointArtistas();
+app.EndpointMusicas();
 
 app.Run();
