@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenAI_API.Moderation;
 using ScreenSound.Api.Request;
 using ScreenSound.Api.Response;
 using ScreenSound.Shared.Data.Banco;
@@ -42,7 +43,7 @@ public static class ArtistasExtensions
                 ArtistaResponse ar = new(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil, nomesAlbuns, notas);
                 artistaResponses.Add(ar);
             }
-            return artistaResponses;
+            return Results.Ok(artistaResponses);
         });
 
 
@@ -50,10 +51,41 @@ public static class ArtistasExtensions
         //Retorna Artistas pelo Nome
         app.MapGet("/Artistas/{Nome}", ([FromServices] Dal<Artista> dal, string nome) =>
         {
-            var artista = dal.ListarPor(a => a.Nome.ToUpper().Equals(nome.ToUpper()));
-            if (artista is null) return Results.NotFound();
-            else return Results.Ok(artista);
+            Artista? artista = dal.ListarPor(a => a.Nome.ToUpper().Equals(nome.ToUpper())).FirstOrDefault();
+            if (artista is null) 
+            {
+                return Results.NotFound();
+            } 
+            else 
+            {
+
+                List<ArtistaResponse> artistaResponses = new();
+                List<Album> albuns = artista.Albuns.ToList();
+                List<AvaliacaoArtista> avaliacaoArtistas = artista.AvaliacoesArtista.ToList();
+
+                List<string> nomesAlbuns = new();
+                foreach (Album album in albuns)
+                {
+                    nomesAlbuns.Add(album.Nome);
+                }
+
+                List<int> notas = new();
+                foreach (AvaliacaoArtista aa in avaliacaoArtistas)
+                {
+                    notas.Add(aa.Nota);
+                }
+
+                ArtistaResponse ar = new(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil, nomesAlbuns, notas);
+                artistaResponses.Add(ar);
+
+                return Results.Ok(artistaResponses);
+
+            }
+            
         });
+
+
+
 
 
 
