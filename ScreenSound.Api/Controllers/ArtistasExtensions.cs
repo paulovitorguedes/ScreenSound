@@ -19,13 +19,32 @@ public static class ArtistasExtensions
         {
             List<Artista> astistas = dal.Listar().ToList();
             List<ArtistaResponse> artistaResponses = new();
+
             foreach (Artista artista in astistas)
             {
-                ArtistaResponse ar = new(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil);
+
+                List<Album> albuns = artista.Albuns.ToList();
+                List<AvaliacaoArtista> avaliacaoArtistas = artista.AvaliacoesArtista.ToList();
+
+                List<string> nomesAlbuns = new();
+                foreach (Album album in albuns)
+                {
+                    nomesAlbuns.Add(album.Nome);
+                }
+
+                List<int> notas = new();
+                foreach (AvaliacaoArtista aa in avaliacaoArtistas)
+                {
+                    notas.Add(aa.Nota);
+                }
+                
+
+                ArtistaResponse ar = new(artista.Id, artista.Nome, artista.Bio, artista.FotoPerfil, nomesAlbuns, notas);
                 artistaResponses.Add(ar);
             }
             return artistaResponses;
         });
+
 
 
         //Retorna Artistas pelo Nome
