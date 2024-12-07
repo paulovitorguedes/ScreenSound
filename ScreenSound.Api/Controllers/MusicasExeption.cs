@@ -12,6 +12,7 @@ public static class MusicasExeption
     {
         app.MapGet("/Musicas/", ([FromServices] Dal<Artista> dal) =>
         {
+
             List<Artista> artistas = dal.Listar().ToList();
             List<MusicaResponse> musicaResponses = new List<MusicaResponse>();
             foreach (Artista artista in artistas)
@@ -32,17 +33,7 @@ public static class MusicasExeption
                             notas.Add(am.Nota);
                         }
 
-                        MusicaResponse musicaResponse = new(
-                            musica.Id,
-                            musica.Nome,
-                            artista.Nome,
-                            musica.Duracao,
-                            musica.Disponivel,
-                            musica.AnoLancamento,
-                            album.Nome,
-                            notas);
-
-                        musicaResponses.Add(musicaResponse);
+                        musicaResponses.Add(ResponseToEntityMusicResponse(musica));
                     }
 
                 }
@@ -50,6 +41,24 @@ public static class MusicasExeption
             }
 
             return musicaResponses;
+        });
+
+
+
+
+        app.MapGet("/Musicas/{id}", ([FromServices] Dal<Musica> dal, int id) =>
+        {
+
+            Musica? musica = dal.ListarPor(m => m.Id == id).FirstOrDefault();
+            if (musica is null)
+            {
+                return Results.NotFound();
+            }
+            else
+            {
+                return Results.Ok(ResponseToEntityMusicResponse(musica));
+            }
+            
         });
 
 
@@ -105,7 +114,7 @@ public static class MusicasExeption
         var listaDeGeneros = new List<Genero>();
         foreach (var item in generos)
         {
-            var entity = RequestToEntity(item);
+            var entity = RequestToEntityGenero(item);
             var genero = dalGenero.ListarPor(g => g.Nome.ToUpper().Equals(item.Nome.ToUpper())).FirstOrDefault();
             if (genero is not null)
             {
@@ -120,10 +129,20 @@ public static class MusicasExeption
         return listaDeGeneros;
     }
 
-    private static Genero RequestToEntity(GeneroRequest genero)
+    private static Genero RequestToEntityGenero(GeneroRequest genero)
     {
         return new Genero() { Nome = genero.Nome, Descricao = genero.Descricao };
     }
 
+    private static MusicaResponse ResponseToEntityMusicResponse(Musica musica)
+    {
+        List<AvaliacaoMusica> avaliacaoMusica = musica.AvaliacoesMusica.ToList();
+        List<int> notas = new();
+        foreach (AvaliacaoMusica am in avaliacaoMusica)
+        {
+            notas.Add(am.Nota);
+        }
 
+        return new(musica.Id, musica.Nome, musica.Album!.Artista!.Nome, musica.Duracao, musica.Disponivel, musica.AnoLancamento, musica.Album.Nome, notas);
+    }
 }
