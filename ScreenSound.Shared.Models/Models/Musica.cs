@@ -38,7 +38,10 @@ public class Musica
         AvaliacoesMusica.Add(nota);
     }
 
-
+    public void AdicionarGenero(Genero genero)
+    {
+        Generos.Add(genero);
+    }
 
     public IEnumerable<int> BuscarNotas()
     {

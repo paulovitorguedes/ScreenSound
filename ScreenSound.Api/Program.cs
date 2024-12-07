@@ -21,6 +21,7 @@ builder.Services.AddDbContext<ScreenSoundContext>();
 builder.Services.AddTransient<Dal<Artista>>();
 builder.Services.AddTransient<Dal<Musica>>();
 builder.Services.AddTransient<Dal<Album>>();
+builder.Services.AddTransient<Dal<Genero>>();
 
 
 
