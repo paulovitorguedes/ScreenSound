@@ -10,4 +10,5 @@ public record MusicaResponse(
     bool Disponivel,
     int? AnoLancamento,
     string Album,
+    IEnumerable<string> Generos,
     IEnumerable<int> Avaliacoes);

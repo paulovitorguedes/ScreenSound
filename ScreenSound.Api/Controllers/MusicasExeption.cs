@@ -134,6 +134,8 @@ public static class MusicasExeption
         return new Genero() { Nome = genero.Nome, Descricao = genero.Descricao };
     }
 
+
+
     private static MusicaResponse ResponseToEntityMusicResponse(Musica musica)
     {
         List<AvaliacaoMusica> avaliacaoMusica = musica.AvaliacoesMusica.ToList();
@@ -143,6 +145,26 @@ public static class MusicasExeption
             notas.Add(am.Nota);
         }
 
-        return new(musica.Id, musica.Nome, musica.Album!.Artista!.Nome, musica.Duracao, musica.Disponivel, musica.AnoLancamento, musica.Album.Nome, notas);
+        List<Genero> generos = musica.Generos.ToList();
+        List<String> nameGenre = [];
+
+        if (generos.Count > 0) 
+        {
+            foreach (Genero g in generos)
+            {
+                nameGenre.Add(g.Nome!);
+            }
+        }
+        
+        return new(
+            musica.Id, 
+            musica.Nome, 
+            musica.Album!.Artista!.Nome, 
+            musica.Duracao, 
+            musica.Disponivel, 
+            musica.AnoLancamento, 
+            musica.Album.Nome, 
+            nameGenre,  
+            notas);
     }
 }
